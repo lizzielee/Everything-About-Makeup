@@ -2253,3 +2253,7 @@ com.dbproject.makeup.NotFoundException: This is not the web page you are looking
 2019-04-17 13:54:05.880  INFO 9788 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 9 ms
 2019-04-17 13:54:05.913  INFO 9788 --- [http-nio-8080-exec-1] com.dbproject.makeup.aspect.LogAspect    : Request: RequestLog{url='http://localhost:8080/59/eni', ip='0:0:0:0:0:0:0:1', classMethod='com.dbproject.makeup.web.IndexController.index', args=[59, eni]}
 2019-04-17 13:54:05.916  INFO 9788 --- [http-nio-8080-exec-1] com.dbproject.makeup.aspect.LogAspect    : Result: index
+2019-04-17 14:17:37.961  INFO 9788 --- [Thread-15] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2019-04-17 14:17:37.961  INFO 9788 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2019-04-17 14:17:37.962  INFO 9788 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2019-04-17 14:17:37.980  INFO 9788 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
