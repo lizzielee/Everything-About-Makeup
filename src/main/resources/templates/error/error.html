@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
+<head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
-    <h1>Error</h1>
-
-    <!-- From Spring Boot -->
-    <div>
-        <div th:utext="'&lt;!--'" th:remove="tag"></div>
-        <div th:utext="'Failed Request URL: ' + ${url}" th:remove="tag"></div>
-        <div th:utext="'Exception message: ' + ${exception.message}" th:remove="tag"></div>
-        <ul th:remove="tag">
-            <li th:each="st: ${exception.stackTrace}" th:remove="tag"><span th:utext="${st}" th:remove="tag"></span></li>
-        </ul>
-        <div th:utext="'--&gt;'" th:remove="tag"></div>
+<!--navigator-->
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>Home</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Categories</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Favorited</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini book icon"></i>Post</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Login</a>
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon transparent input m-margin-tb-tiny">
+                    <input type="text" placeholder="Search....">
+                    <i class="search inverted link icon"></i>
+                </div>
+            </div>
+        </div>
     </div>
+</nav>
+
+<br>
+<br>
+
+<div class="m-container-small m-padded-tb-massive">
+    <div class="ui error message">
+        <div class="ui container">
+            <h2>Error</h2>
+            <p>This page isn't working.</p>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<!-- From Spring Boot -->
+<div>
+    <div th:utext="'&lt;!--'" th:remove="tag"></div>
+    <div th:utext="'Failed Request URL: ' + ${url}" th:remove="tag"></div>
+    <div th:utext="'Exception message: ' + ${exception.message}" th:remove="tag"></div>
+    <ul th:remove="tag">
+        <li th:each="st: ${exception.stackTrace}" th:remove="tag"><span th:utext="${st}" th:remove="tag"></span></li>
+    </ul>
+    <div th:utext="'--&gt;'" th:remove="tag"></div>
+</div>
 </body>
 </html>

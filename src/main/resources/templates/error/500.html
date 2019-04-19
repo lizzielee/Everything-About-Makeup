@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="">
+<head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>500</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
 </head>
 <body>
-    <h1>500</h1>
+<!--navigator-->
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>Home</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Categories</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Favorited</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini book icon"></i>Post</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Login</a>
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon transparent input m-margin-tb-tiny">
+                    <input type="text" placeholder="Search....">
+                    <i class="search inverted link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+
+<div class="m-container-small m-padded-tb-massive">
+    <div class="ui error message">
+        <div class="ui container">
+            <h2>500</h2>
+            <p>This page isn't working.</p>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
 </body>
 </html>
