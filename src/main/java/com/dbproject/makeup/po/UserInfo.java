@@ -8,13 +8,13 @@ import java.util.List;
 @Table(name="user_personal_info")
 public class UserInfo {
 
-    // Relationship: UserInfo - UserManagement
+    // Relationship: UserInfo - User
     @Id
     private int userId;
 
     @OneToOne
     @MapsId
-    private UserManagement userManagement;
+    private User user;
 
     private String realName;
     private String sex;
@@ -98,12 +98,12 @@ public class UserInfo {
         this.userLevel = userLevel;
     }
 
-    public UserManagement getUserManagement() {
-        return userManagement;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserManagement(UserManagement userManagement) {
-        this.userManagement = userManagement;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Review> getWriteReviewList() {

@@ -5,24 +5,24 @@ import java.util.Date;
 
 @Entity
 @Table(name="user_management")
-public class UserManagement {
+public class User {
 
     @Id
     @GeneratedValue
     private int userId;
 
-    private String userName;
-    private String userPass;
+    private String username;
+    private String password;
     private String userRole;
     private int userState;
     @Temporal(TemporalType.DATE)
     private Date registrationDate;
 
-    // Relationship: UserInfo - UserManagement
-    @OneToOne(mappedBy = "userManagement")
+    // Relationship: UserInfo - User
+    @OneToOne(mappedBy = "user")
     private UserInfo userInfo;
 
-    public UserManagement() {
+    public User() {
     }
 
     public int getUserId() {
@@ -33,20 +33,20 @@ public class UserManagement {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUserPass() {
-        return userPass;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPass(String userPass) {
-        this.userPass = userPass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserRole() {
@@ -83,10 +83,10 @@ public class UserManagement {
 
     @Override
     public String toString() {
-        return "UserManagement{" +
+        return "User{" +
                 "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", userPass='" + userPass + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", userRole='" + userRole + '\'' +
                 ", registrationDate=" + registrationDate +
                 ", userState=" + userState +
