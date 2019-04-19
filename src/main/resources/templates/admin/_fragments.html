@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Backend Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/editormd.min.css" th:href="@{/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--navigator-->
+<nav th:fragment="menu(n)" class="ui inverted attached segment">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>User</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Category</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Review</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Product</a>
+            <div class="ui icon transparent input m-margin-tb-tiny">
+                <input type="text" placeholder="Search....">
+                <i class="search inverted link icon"></i>
+            </div>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">Username</div>
+                    <i class="dropdown icon"></i>
+                    <div class="ui menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+</th:block>
+
+</body>
+</html>
