@@ -28,17 +28,26 @@ import javax.persistence.criteria.Root;
 import java.util.*;
 
 @Service
-public abstract class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService{
+
+    private final ReviewRepository reviewRepository;
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+        this.reviewRepository = reviewRepository;
+    }
 
     @Override
     public Review getReview(Long id) {
         return reviewRepository.findById(id).get();   // .findOne(id)
     }
 
-//    @Override
+    @Override
+    public Page<Review> listReview(Pageable pageable, Review review) {
+        return null;
+    }
+
+    //    @Override
     public Page<Review> listReview(Pageable pageable, ReviewQuery review) {
         return reviewRepository.findAll(new Specification<Review>() {
             @Override

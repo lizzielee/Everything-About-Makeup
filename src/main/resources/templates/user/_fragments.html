@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/editormd.min.css" th:href="@{/css/editormd.min.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+    <!--</nav>-->
+    <nav th:fragment="menu(n)" class="ui inverted menu">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+                <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="mini home icon"></i>Home</a>
+
+                <div class="ui inverted pointing dropdown link item">
+                    <!--<a href="#" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="mini bars icon"></i>Explore</a>-->
+                    <i class="mini bars icon"></i>
+                    <span class= "text">Explore</span>
+                    <div class="menu">
+                        <div class="item">
+                            <i class="dropdown icon"></i>
+                            <span class="text">MakeUp</span>
+                            <div class="menu">
+                                <div class="item">Face</div>
+                                <div class="item">Eye</div>
+                                <div class="item">Lip</div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <i class="dropdown icon"></i>
+                            <span class="text">SkinCare</span>
+                            <div class="menu">
+                                <div class="item">Face</div>
+                                <div class="item">Eye</div>
+                                <div class="item">Lip</div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="mini heart icon"></i>Favorited</a>
+                <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="mini book icon"></i>Post</a>
+                <!--<a href="#" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="mini key icon"></i>Login</a>-->
+                <div class="right m-item item m-mobile-hide">
+                    <div class="ui icon transparent input m-margin-tb-tiny">
+                        <input type ="text" placeholder="Search...." class="white item">
+                        <i class="search inverted link icon"></i>
+                    </div>
+                    <div class="ui dropdown item">
+                        <!--<img class="ui avatar image" src = "https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" th:src="@{{session.user.avatar}}}">-->
+                        <img class="ui avatar image" src = "https://images.unsplash.com/photo-1505088043216-2f88746b11a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=732&q=80">
+                        <!--<span th:text="${{session.user.nickname}}">UserName</span>-->
+                        <span>UserName</span>
+
+                        <!--<div class="text">Username</div>-->
+
+                        <i class="dropdown icon"></i>
+                        <div class="ui menu">
+                            <a href="#" th:href="@{/admin/logout}" class="item">Log Out</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+    </nav>
+
+
+
+    <footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+        <div class="ui center aligned container">
+            <p class="m-text-thin m-text-spaced m-opacity-tiny">Copyright © 2019 - <span th:text="${#dates.year(#dates.createNow())}"></span> Everything About MakeUp</p>
+        </div>
+
+    </footer>
+
+</body>
+
+
+<style>
+    @media (min-height: 320px) {
+        .m-padded-tb-massive { /* Increased specificity for SO snippet priority */
+            position: absolute;
+            bottom: -120;
+            width: 100%;
+        }
+    }
+</style>
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+
+</th:block>
+
+</html>

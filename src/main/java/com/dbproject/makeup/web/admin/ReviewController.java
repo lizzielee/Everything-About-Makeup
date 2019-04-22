@@ -14,6 +14,7 @@ import com.dbproject.makeup.po.User;
 import com.dbproject.makeup.service.ReviewService;
 import com.dbproject.makeup.vo.ReviewQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -29,7 +30,6 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
-
 public class ReviewController {
 
     private static final String INPUT = "admin/reviews-input";
