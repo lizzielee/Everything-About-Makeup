@@ -16,14 +16,28 @@
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>Home</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Categories</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Favorited</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Explore</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Favorite</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini book icon"></i>Post</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Login</a>
             <div class="right m-item item m-mobile-hide">
                 <div class="ui icon transparent input m-margin-tb-tiny">
-                    <input type="text" placeholder="Search....">
+                    <input type="text" placeholder="Search...." class="white item">
                     <i class="search inverted link icon"></i>
+                </div>
+                <div class="ui dropdown item">
+                    <!--<img class="ui avatar image" src = "https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" th:src="@{{session.user.avatar}}}">-->
+                    <img class="ui avatar image" src = "https://images.unsplash.com/photo-1505088043216-2f88746b11a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=732&q=80">
+                    <!--<span th:text="${{session.user.nickname}}">UserName</span>-->
+                    <span>UserName</span>
+
+                    <!--<div class="text">Username</div>-->
+
+                    <i class="dropdown icon"></i>
+                    <div class="ui menu">
+                        <!--Need to change admin into user-->
+                        <a href="#" th:href="@{/admin/logout}" class="item">Log Out</a>
+                    </div>
                 </div>
             </div>
         </div>
