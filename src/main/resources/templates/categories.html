@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="_fragments :: head(~{::title})">
+<head th:replace="_fragments :: head(~{::title})">>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories</title>
@@ -9,19 +9,20 @@
     <link rel="stylesheet" href="../static/css/editormd.min.css">
 </head>
 <body>
+
 <!--navigator-->
 <nav class="ui inverted attached segment">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>Home</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Explore</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Favorite</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Categories</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Favorited</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="mini book icon"></i>Post</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Log In</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Login</a>
             <div class="right m-item item m-mobile-hide">
                 <div class="ui icon transparent input m-margin-tb-tiny">
-                    <input type="text" placeholder="Search...." class="white item">
+                    <input type="text" placeholder="Search....">
                     <i class="search inverted link icon"></i>
                 </div>
                 <div class="ui dropdown item">
@@ -60,6 +61,17 @@
             </div>
         </div>
         <div class="ui attached segment m-padded-tb-large">
+            <div class="ui container">
+                <div class="ui attached pointing menu">
+                <div class="right menu">
+                    <a href="#" class="teal active item">Cat1</a>
+                    <a href="#" class="item">Cat2</a>
+                    <a href="#" class="item">Cat3</a>
+                    <a href="#" class="item">Cat4</a>
+                    <a href="#" class="item">Cat5</a>
+                </div>
+                </div>
+            </div>
             <div class="ui labeled button m-margin-tb-tiny">
                 <a href="#" class="ui basic teal button">Foundation</a>
                 <div class="ui basic teal left pointing label">24</div>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!--navigation-->
+<nav th:replace="admin/_fragments :: menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>User</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Category</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Review</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Product</a>
+            <div class="ui icon transparent input m-margin-tb-tiny">
+                <input type="text" placeholder="Search....">
+                <i class="search inverted link icon"></i>
+            </div>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">Username</div>
+                    <i class="dropdown icon"></i>
+                    <div class="ui menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--content-->
+<br>
+<br>
+<br>
+
+<div class="m-container m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui top attached tabular menu">
+            <div th:each="g_category, iterStat : ${g_categories}">
+                <a class="item" th:classappend="${activeGeneralCategory==g_category.generalCategoryId} ? 'active'"
+                   th:href="@{/admin/categories/{g_cat}(g_cat=${g_category.generalCategoryId})}">
+                    <span th:text="${g_category.generalCategoryName}">text</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="ui bottom attached segment">
+            <table class="ui compact celled table">
+                <thead>
+                <tr>
+                    <th class="two wide">Id</th>
+                    <th class="six wide">Name</th>
+                    <th class="three wide">Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="d_category: ${d_categories}">
+                    <td th:text="${d_category.detailedCategoryId}">1</td>
+                    <td th:text="${d_category.detailedCategoryName}">Name</td>
+                    <td>
+                        <button class="ui floated small labeled icon button"
+                                th:data-catId="${d_category.detailedCategoryId}"
+                                th:data-catName="${d_category.detailedCategoryName}"
+                                th:onclick="javascript:edit(this.getAttribute('data-catId'), this.getAttribute('data-catName'));">
+                            <i class="edit icon"></i>Edit
+                        </button>
+                        <button class="ui floated small negative labeled icon button" id="del-btn"
+                                th:data-catId="${d_category.detailedCategoryId}"
+                                th:data-catName="${d_category.detailedCategoryName}"
+                                th:onclick="javascript:del(this.getAttribute('data-catId'), this.getAttribute('data-catName'));">
+                            <i class="trash icon"></i>Delete
+                        </button>
+                    </td>
+                </tr>
+                <tfoot class="full-width">
+                <tr>
+                    <th colspan="4">
+                        <button class="ui right floated small primary labeled icon button" id="new-btn"
+                                th:onclick="javascript:newCategory();">
+                            <i class="pencil icon"></i>New Category
+                        </button>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<!--Modal-->
+<div class="ui basic small modal">
+    <div class="ui icon header">
+        <i class="archive icon"></i>
+        <span id="modal_header"></span>
+    </div>
+    <div class="content">
+        <p><span id="modal_content"></span></p>
+        <form id="modal_form" class="ui form error" th:object="${detailedProductCategory}" method="post"
+              th:action="@{/admin/categories/{g_cat}(g_cat=${activeGeneralCategory})}">
+            <div class="field">
+                <input type="hidden" name="detailedCategoryId" th:value="*{detailedCategoryId}">
+                <input type="text" name="detailedCategoryName" th:value="*{detailedCategoryName}"
+                       placeholder="Category Name">
+            </div>
+            <div class="ui error mini message"></div>
+        </form>
+    </div>
+    <div class="actions">
+        <button class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            Save
+        </button>
+        <button class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            Cancel
+        </button>
+    </div>
+</div>
+
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    // Close message
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+    // Edit
+    function edit(catId, catName) {
+        $('#modal_header').text("Edit");
+        $('#modal_content').text("Edit detailed category " + catName + " to: ");
+        $('#modal_form').form().show();
+
+        $('.ui.basic.modal').modal({
+            onApprove: function () {
+                var approve = false;
+                $('[name="detailedCategoryId"]').val(catId);
+                $('#modal_form').form(
+                    {
+                        fields: {
+                            detailedCategoryName: {
+                                identifier: 'detailedCategoryName',
+                                rules: [{
+                                    type: 'empty',
+                                    prompt: "Category name cannot be empty!"
+                                }]
+                            }
+                        }
+                    },
+                    {
+                        onSuccess: function () {
+                            approve = true;
+                        }
+                    }).submit();
+                return approve;
+            }
+        }).modal('show');
+    }
+
+    // Delete
+    function del(catId, catName) {
+        $('#modal_header').text("Delete");
+        $('#modal_content').text("Delete detailed category " + catName + "?");
+        $('#modal_form').hide();
+
+        $('.ui.basic.modal').modal({
+            onApprove: function () {
+                $('[name="detailedCategoryId"]').val(catId);
+                $('#modal_form').submit();
+            }
+        }).modal('show')
+        ;
+    }
+
+    // New
+    function newCategory() {
+        $('#modal_header').text("New Category");
+        $('#modal_content').text("Create new detailed category: ");
+        $('#modal_form').form().show();
+
+        $('.ui.basic.modal').modal({
+            onApprove: function () {
+                var approve = false;
+                $('#modal_form').form(
+                    {
+                        fields: {
+                            detailedCategoryName: {
+                                identifier: 'detailedCategoryName',
+                                rules: [{
+                                    type: 'empty',
+                                    prompt: "Category name cannot be empty!"
+                                }]
+                            }
+                        }
+                    },
+                    {
+                        onSuccess: function () {
+                            approve = true;
+                        }
+                    }).submit();
+                return approve;
+            }
+        }).modal('show');
+    }
+</script>
+</body>
+</html>
