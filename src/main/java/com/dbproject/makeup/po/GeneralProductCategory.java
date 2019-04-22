@@ -10,7 +10,7 @@ public class GeneralProductCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int generalCategoryId;
+    private Long generalCategoryId;
 
     private String generalCategoryName;
 
@@ -21,11 +21,11 @@ public class GeneralProductCategory {
     public GeneralProductCategory() {
     }
 
-    public int getGeneralCategoryId() {
+    public Long getGeneralCategoryId() {
         return generalCategoryId;
     }
 
-    public void setGeneralCategoryId(int generalCategoryId) {
+    public void setGeneralCategoryId(Long generalCategoryId) {
         this.generalCategoryId = generalCategoryId;
     }
 

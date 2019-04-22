@@ -10,7 +10,7 @@ public class DetailedProductCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int detailedCategoryId;
+    private Long detailedCategoryId;
 
     private String detailedCategoryName;
 
@@ -25,11 +25,11 @@ public class DetailedProductCategory {
     public DetailedProductCategory() {
     }
 
-    public int getDetailedCategoryId() {
+    public Long getDetailedCategoryId() {
         return detailedCategoryId;
     }
 
-    public void setDetailedCategoryId(int detailedCategoryId) {
+    public void setDetailedCategoryId(Long detailedCategoryId) {
         this.detailedCategoryId = detailedCategoryId;
     }
 
