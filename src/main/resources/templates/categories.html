@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="./static/css/me.css">
-    <link rel="stylesheet" href="./static/css/editormd.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/css/editormd.min.css">
 </head>
 <body>
 
@@ -25,6 +25,21 @@
                     <input type="text" placeholder="Search....">
                     <i class="search inverted link icon"></i>
                 </div>
+                <div class="ui dropdown item">
+                    <!--<img class="ui avatar image" src = "https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" th:src="@{{session.user.avatar}}}">-->
+                    <img class="ui avatar image" src = "https://images.unsplash.com/photo-1505088043216-2f88746b11a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=732&q=80">
+                    <!--<span th:text="${{session.user.nickname}}">UserName</span>-->
+                    <span>UserName</span>
+
+                    <!--<div class="text">Username</div>-->
+
+                    <i class="dropdown icon"></i>
+                    <div class="ui menu">
+                        <!--Need to change admin into user-->
+                        <a href="#" th:href="@{/admin/logout}" class="item">Log Out</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

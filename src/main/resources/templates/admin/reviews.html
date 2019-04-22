@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!--navigation-->
+<nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>User</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Category</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Review</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Product</a>
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon transparent input m-margin-tb-tiny">
+                    <input type="text" placeholder="Search....">
+                    <i class="search inverted link icon"></i>
+                </div>
+                <div class="ui dropdown item">
+                    <div class="text">
+                        Username
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--content-->
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui secondary segment form">
+            <input type="hidden" name="page">
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="Title">
+                </div>
+                <div class="field">
+                    <div class="ui labeled action input">
+                        <div class="ui type selection dropdown">
+                            <input type="hidden" name="typeId">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Category</div>
+                            <div class="menu">
+                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}"
+                                     th:text="${type.name}">Error Log
+                                </div>
+                                <!--/*-->
+                                <div class="item" data-value="2">Developer Log</div>
+                                <!--*/-->
+                            </div>
+                        </div>
+                        <button id="clear-btn" class="ui compact button">Clear</button>
+                    </div>
+
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">Recommendation</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <button type="button" id="search-btn" class="ui mini teal basic button"><i class="search icon"></i>Search
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="table-container">
+            <table th:fragment="blogList" class="ui compact teal table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Recommend</th>
+                    <th>State</th>
+                    <th>Last Update</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="blog,iterStat : ${page.content}">
+                    <td th:text="${iterStat.count}">1</td>
+                    <td th:text="${blog.title}">Review1</td>
+                    <td th:text="${blog.type.name}">Type1</td>
+                    <td th:text="${blog.recommend} ? 'Yes':'No'">Yes</td>
+                    <td th:text="${blog.published} ? 'Publish':'Draft'">Publish</td>
+                    <td th:text="${blog.updateTime}">2017-10-02 09:45</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}"
+                           class="ui mini teal basic button">Edit</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}"
+                           class="ui mini red basic button">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <div class="ui mini pagination menu" th:if="${page.totalPages}>1">
+                            <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item"
+                               th:unless="${page.first}">Previous</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number}+1" class=" item"
+                               th:unless="${page.last}">Next</a>
+                        </div>
+                        <a href="#" th:href="@{/admin/blogs/input}"
+                           class="ui mini right floated teal basic button">New Review</a>
+                    </th>
+                </tr>
+                </tfoot>
+            </table>
+
+            <div class="ui success message" th:unless="${#strings.isEmpty(message)}">
+                <p th:text="${message}">Success!</p>
+                <i class="close icon"></i>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<br>
+<br>
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    // Close message
+    $('.message .close')
+        .on('click', function () {
+            $(this)
+                .closest('.message')
+                .transition('fade');
+        });
+
+    $('#clear-btn')
+        .on('click', function () {
+            $('.ui.type.dropdown')
+                .dropdown('clear')
+            ;
+        })
+    ;
+
+    function page(obj) {
+        $("[name='page']").val($(obj).data("page"));
+        loaddata();
+    }
+
+    $("#search-btn").click(function () {
+        $("[name='page']").val(0);
+        loaddata();
+    });
+
+    function loaddata() {
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
+            recommend: $("[name='recommend']").prop('checked'),
+            page: $("[name='page']").val()
+        });
+    }
+
+</script>
+</body>
+</html>

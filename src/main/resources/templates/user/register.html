@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="_fragments :: head(~{::title})">>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -30,7 +30,7 @@
     </div>
 </nav>
 
-<div class="m-container-large m-padded-tb-big">
+<div  class="m-container-large m-padded-tb-big">
     <div class="ui container">
         <div class="ui three column stackable grid login-header">
             <div class="column"></div>
@@ -40,7 +40,7 @@
                     <div class="row text-center align-center">
                         <h1 class="ui header white">
                             <i class="settings icon"></i>
-                            User Login
+                            Register
                         </h1>
                     </div>
                 </div>
@@ -53,10 +53,40 @@
             <div class="column">
                 <form id="login" class="ui fluid form segment">
                     <div class="field">
-                        <label class="">Username</label>
+                        <label class="">First name</label>
                         <div class="ui left icon input">
-                            <input type="text" name="username" placeholder="">
+                            <input type="text" name="userName" placeholder="">
+                            <i class="circle outline icon"></i>
+                            <!--<div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">Last name</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="userName" placeholder="">
+                            <i class="circle outline icon"></i>
+                            <!--<div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">username </label>
+                        <div class="ui left icon input">
+                            <input type="text" name="userName" placeholder="">
                             <i class="user icon"></i>
+                            <!--<div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">Email address</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="userName" placeholder="">
+                            <i class="envelope icon"></i>
                             <!--<div class="ui corner label">
                                 <i class="icon asterisk"></i>
                             </div>-->
@@ -72,25 +102,25 @@
                             </div>-->
                         </div>
                     </div>
-                    <div class="inline field">
-                        <div class="ui checkbox">
-                            <input type="checkbox" name="terms">
-                            <label>Remember Password</label>
+                    <div class="field">
+                        <label class="">Gender</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="userName" placeholder="">
+                            <i class="venus mars icon"></i>
+                            <!--<div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>-->
                         </div>
                     </div>
+
+
                     <div class="inline field">
-                        <div class="ui secondary submit button">Login</div>
+                        <div class="ui secondary submit button">Register</div>
                     </div>
 
                 </form>
-                <div class="ui message">
-                    New to us? <a href="#">Sign Up</a>
-                </div>
             </div>
             <div class="column"></div>
         </div>
     </div>
 </div>
-
-</body>
-</html>
