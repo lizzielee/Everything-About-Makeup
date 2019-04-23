@@ -11,4 +11,6 @@ public interface ProductService {
     Product getProduct(Long id);
 
     Page<Product> listProduct(Pageable pageable);
+
+    Page<Product> listProduct(Pageable pageable, Long detailedCategoryId);
 }

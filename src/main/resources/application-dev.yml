@@ -15,3 +15,7 @@ logging:
     root: info
     com.dbproject.makeup: debug
   file: log/makeup-dev.log
+
+upload:
+  location: E:\Work\Database\Everything-about-makeup\upload
+

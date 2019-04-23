@@ -12,7 +12,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int productId;
 
+    private String name;
     private String info;
+    private String image;
 
     // Relationship: Review - Product
     @ManyToMany(mappedBy = "relatedProductList")
@@ -41,6 +43,22 @@ public class Product {
         this.info = info;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public List<Review> getReviewList() {
         return reviewList;
     }
@@ -61,7 +79,10 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "productId=" + productId +
+                ", name='" + name + '\'' +
                 ", info='" + info + '\'' +
+                ", image='" + image + '\'' +
+                ", detailedProductCategory=" + detailedProductCategory +
                 '}';
     }
 }

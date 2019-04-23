@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet" href="../static/css/editormd.min.css">
+</head>
+<body>
+
+<!--navigator-->
+<nav th:replace="_fragments :: menu(2)"></nav>
+
+<!--content-->
+<div class="m-container-small m-padded-tb-big">
+    <!--show products-->
+    <div class="ui container">
+        <div class="ui grid">
+            <div class="four wide column">
+                <!--sidebar-->
+                <div class="ui large vertical text menu">
+                    <!--Category-->
+                    <div class="item">
+                        <div class="header">
+                            <span th:text="${g_category.generalCategoryName}">Category</span>
+                        </div>
+                        <div class="menu" th:each="d_cat : ${g_category.detailedProductCategoryList}">
+                            <a class="item" th:text="${d_cat.detailedCategoryName}"
+                               th:href="@{/explore/{g_catId}/{d_catId}(g_catId=${g_category.generalCategoryId}, d_catId=${d_cat.detailedCategoryId})}"
+                               th:classappend="${activeDetailedCategory == d_cat.detailedCategoryId}? 'active'">
+                            </a>
+                        </div>
+                    </div>
+
+                    <!--Sort By-->
+                    <div class="item">
+                        <div class="header">Sort By</div>
+                        <div class="menu">
+                            <a class="item">
+                                Most Comments
+                            </a>
+                            <a class="item">
+                                Most Popular
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="twelve wide column">
+                <!--products-->
+                <div class="ui three stackable cards">
+                    <div class="ui fluid card" th:each="product : ${products}">
+                        <a class="image" href="#">
+                            <img th:src="${product.image}" th:href="@{/explore/product/{id}(id=${product.productId})}">
+                        </a>
+                        <div class="content">
+                            <a class="header" href="#" th:text="${product.name}" th:href="@{/explore/product/{id}(id=${product.productId})}"></a>
+                            <div class="meta">
+                                <a th:text="${product.info}" th:href="@{/explore/product/{id}(id=${product.productId})}">Product Info</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+</body>
+</html>
