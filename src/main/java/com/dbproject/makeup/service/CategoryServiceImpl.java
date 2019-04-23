@@ -39,8 +39,6 @@ public class CategoryServiceImpl implements CategoryService{
         return detailedCategoryRepository.save(category);
     }
 
-
-
     @Transactional
     @Override
     public DetailedProductCategory getDetailedProductCategory(Long id) {
