@@ -14,53 +14,54 @@
 <nav th:replace="_fragments :: menu(2)"></nav>
 
 <!--content-->
-<div class="m-container-small m-padded-tb-big">
-    <!--show products-->
-    <div class="ui container">
-        <div class="ui grid">
-            <div class="four wide column">
-                <!--sidebar-->
-                <div class="ui large vertical text menu">
-                    <!--Category-->
-                    <div class="item">
-                        <div class="header">
-                            <span th:text="${g_category.generalCategoryName}">Category</span>
-                        </div>
-                        <div class="menu" th:each="d_cat : ${g_category.detailedProductCategoryList}">
-                            <a class="item" th:text="${d_cat.detailedCategoryName}"
-                               th:href="@{/explore/{g_catId}/{d_catId}(g_catId=${g_category.generalCategoryId}, d_catId=${d_cat.detailedCategoryId})}"
-                               th:classappend="${activeDetailedCategory == d_cat.detailedCategoryId}? 'active'">
-                            </a>
-                        </div>
+<div class="ui m-container m-padded-tb-big">
+    <div class="ui grid">
+        <div class="four wide column">
+            <!--sidebar-->
+            <div class="ui large vertical text menu">
+                <!--Category-->
+                <div class="item">
+                    <div class="header">
+                        <span th:text="${g_category.generalCategoryName}">Category</span>
                     </div>
+                    <div class="menu" th:each="d_cat : ${g_category.detailedProductCategoryList}">
+                        <a class="item" th:text="${d_cat.detailedCategoryName}"
+                           th:href="@{/explore/{g_catId}/{d_catId}(g_catId=${g_category.generalCategoryId}, d_catId=${d_cat.detailedCategoryId})}"
+                           th:classappend="${activeDetailedCategory == d_cat.detailedCategoryId}? 'active'">
+                        </a>
+                    </div>
+                </div>
 
-                    <!--Sort By-->
-                    <div class="item">
-                        <div class="header">Sort By</div>
-                        <div class="menu">
-                            <a class="item">
-                                Most Comments
-                            </a>
-                            <a class="item">
-                                Most Popular
-                            </a>
-                        </div>
+                <!--Sort By-->
+                <div class="item">
+                    <div class="header">Sort By</div>
+                    <div class="menu">
+                        <a class="item">
+                            Most Comments
+                        </a>
+                        <a class="item">
+                            Most Popular
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="twelve wide column">
-                <!--products-->
-                <div class="ui three stackable cards">
-                    <div class="ui fluid card" th:each="product : ${products}">
-                        <a class="image" href="#">
-                            <img th:src="${product.image}" th:href="@{/explore/product/{id}(id=${product.productId})}">
-                        </a>
-                        <div class="content">
-                            <a class="header" href="#" th:text="${product.name}" th:href="@{/explore/product/{id}(id=${product.productId})}"></a>
-                            <div class="meta">
-                                <a th:text="${product.info}" th:href="@{/explore/product/{id}(id=${product.productId})}">Product Info</a>
-                            </div>
+        <div class="twelve wide column">
+            <!--products-->
+            <div class="ui three stackable cards">
+                <div class="ui fluid card" th:each="product : ${products}">
+                    <a class="image" href="#">
+                        <img th:src="${product.image}" th:href="@{/explore/{g_catId}/{d_catId}/{id}
+                            (g_catId=${g_category.generalCategoryId}, d_catId=${activeDetailedCategory},id=${product.productId})}">
+                    </a>
+                    <div class="content">
+                        <a class="header" href="#" th:text="${product.name}" th:href="@{/explore/{g_catId}/{d_catId}/{id}
+                            (g_catId=${g_category.generalCategoryId}, d_catId=${activeDetailedCategory},id=${product.productId})}"></a>
+                        <div class="meta">
+                            <a th:text="${product.info}" th:href="@{/explore/{g_catId}/{d_catId}/{id}
+                            (g_catId=${g_category.generalCategoryId}, d_catId=${activeDetailedCategory},id=${product.productId})}">Product
+                                Info</a>
                         </div>
                     </div>
                 </div>
