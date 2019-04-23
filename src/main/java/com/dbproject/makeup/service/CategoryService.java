@@ -5,6 +5,8 @@ import com.dbproject.makeup.po.GeneralProductCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface CategoryService {
 
     DetailedProductCategory saveDetailedProductCategory(DetailedProductCategory category);
@@ -26,4 +28,6 @@ public interface CategoryService {
     GeneralProductCategory updateGeneralProductCategory(Long id, GeneralProductCategory category);
 
     void deleteGeneralProductCategory(Long id);
+
+    List<DetailedProductCategory> listDetailedProductCategory();
 }

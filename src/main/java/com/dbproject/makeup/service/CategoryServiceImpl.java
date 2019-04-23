@@ -101,6 +101,13 @@ public class CategoryServiceImpl implements CategoryService{
         return generalCategoryRepository.save(originCategory);
     }
 
+    @Override
+    public List<DetailedProductCategory> listDetailedProductCategory() {
+        return detailedCategoryRepository.findAll();
+    }
+
+
+
     @Transactional
     @Override
     public void deleteGeneralProductCategory(Long id) {

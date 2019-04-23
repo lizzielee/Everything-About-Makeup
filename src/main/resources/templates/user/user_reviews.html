@@ -10,7 +10,7 @@
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Review Management</h2>
@@ -40,11 +40,13 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/user_reviews/input}" class=" item">Post</a>
+            <a href="#" th:href="@{/user_reviews/user-input}" class=" item">Post</a>
             <a href="#" th:href="@{/user_reviews}" class="teal active item">List</a>
         </div>
     </div>
 </div>
+
+<span th:text="${page}"></span>
 
 <!--中间内容-->
 <div  class="m-container-small m-padded-tb-big">
@@ -55,27 +57,34 @@
                 <div class="field">
                     <input type="text" name="title" placeholder="Title">
                 </div>
-                <div class="field">
-                    <div class="ui labeled action input">
-                        <div class="ui type selection dropdown">
-                            <input type="hidden" name="typeId">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Category</div>
-                            <div class="menu">
-                                <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">Skin</div>
-                                <!--/*-->
-                                <div class="item" data-value="2">Eye</div>
-                                <!--*/-->
-                                <div class="item" data-value="3">Lip</div>
-                                <!--*/-->
-                                <div class="item" data-value="4">Others</div>
-                                <!--*/-->
-                            </div>
-                        </div>
-                        <button id="clear-btn" class="ui compact button">clear</button>
-                    </div>
 
-                </div>
+                <!--<div class="field">-->
+                    <!--<div class="ui labeled action input">-->
+                        <!--<div class="ui type selection dropdown">-->
+                            <!--<input type="hidden" name="typeId">-->
+                            <!--<i class="dropdown icon"></i>-->
+                            <!---->
+                            <!--<div class="default text">Category</div>-->
+                            <!--<div class="menu">-->
+                                <!--&lt;!&ndash;<div th:each="d_category : d_categories ${types}" class="item" data-value="1" th:data-value="${d_category.id}" th:text="${d_category.name}">Skin</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;/*&ndash;&gt;-->
+                                <!--<div class="item" data-value="2">Eye</div>-->
+                                <!--&lt;!&ndash;*/&ndash;&gt;-->
+                                <!--<div class="item" data-value="3">Lip</div>-->
+                                <!--&lt;!&ndash;*/&ndash;&gt;-->
+                                <!--<div class="item" data-value="4">Others</div>-->
+
+                                <!--&lt;!&ndash;<div class="item" data-value="1">Skin</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="item" data-value="2">Eye</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="item" data-value="3">Lip</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<div class="item" data-value="4">Others</div>&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!---->
+                        <!--<button id="clear-btn" class="ui compact button">clear</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+
                 <div class="field">
                     <div class="ui checkbox">
                         <input type="checkbox" id="recommend" name="recommend">
@@ -93,7 +102,7 @@
                 <tr>
                     <th></th>
                     <th>Title</th>
-                    <th>Category</th>
+                    <!--<th>Category</th>-->
                     <th>Recommend</th>
                     <th>Status</th>
                     <th>Last Update</th>
@@ -101,16 +110,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="review,iterStat : ${page.content}">
+                <tr th:each="review,iterStat : ${page}">
+                <!--<tr th:each="review,iterStat : ${review}">-->
+                    <!--/*-->
                     <td th:text="${iterStat.count}">1</td>
+                    <!--/*-->
                     <td th:text="${review.title}">Creme Cheek Colour</td>
-                    <td th:text="${product.detailedProductCategory}">Skin</td>
+                    <!--&lt;!&ndash;/*&ndash;&gt;-->
+                    <!--<td th:text="${product.detailedProductCategory}">Skin</td>-->
+                    <!--/*-->
                     <td th:text="${review.recommend} ? 'Yes':'No'">Yes</td>
+                    <!--/*-->
                     <td th:text="${review.published} ? 'Published':'Draft'">Draft</td>
+                    <!--/*-->
                     <td th:text="${review.updateTime}">2019-04-02 09:45</td>
                     <td>
-                        <a href="#" th:href="@{/user_reviews/{id}/input(id=${review.id})}" class="ui mini teal basic button">Edit</a>
-                        <a href="#" th:href="@{/user_reviews/{id}/delete(id=${review.id})}" class="ui mini red basic button">Delete</a>
+                        <a href="#" th:href="@{/user/user_reviews/{id}/input(id=${review.id})}" class="ui mini teal basic button">Edit</a>
+                        <a href="#" th:href="@{/user/user_reviews/{id}/delete(id=${review.id})}" class="ui mini red basic button">Delete</a>
                     </td>
                 </tr>
                 </tbody>
@@ -199,7 +215,7 @@
         loaddata();
     });
     function loaddata() {
-        $("#table-container").load(/*[[@{/user_reviews/search}]]*/"/user_reviews/search",{
+        $("#table-container").load(/*[[@{/user/user_reviews/search}]]*/"/user/user_reviews/search",{
             title : $("[name='title']").val(),
             typeId : $("[name='typeId']").val(),
             recommend : $("[name='recommend']").prop('checked'),
