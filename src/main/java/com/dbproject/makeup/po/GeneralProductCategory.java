@@ -50,6 +50,7 @@ public class GeneralProductCategory {
         return "GeneralProductCategory{" +
                 "generalCategoryId=" + generalCategoryId +
                 ", generalCategoryName='" + generalCategoryName + '\'' +
+                ", detailedProductCategoryList=" + detailedProductCategoryList +
                 '}';
     }
 }

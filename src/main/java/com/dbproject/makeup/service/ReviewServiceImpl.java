@@ -9,67 +9,83 @@
  */
 package com.dbproject.makeup.service;
 import com.dbproject.makeup.NotFoundException;
+import com.dbproject.makeup.dao.ProductRepository;
 import com.dbproject.makeup.dao.ReviewRepository;
+import com.dbproject.makeup.po.Product;
 import com.dbproject.makeup.po.Review;
 import com.dbproject.makeup.vo.ReviewQuery;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
 
     private final ReviewRepository reviewRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ProductRepository productRepository) {
         this.reviewRepository = reviewRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public Review getReview(Long id) {
-        return reviewRepository.findById(id).get();   // .findOne(id)
+        return reviewRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Page<Review> listReview(Pageable pageable, Review review) {
-        return null;
+    public Page<Review> listReview(Pageable pageable) {
+        return reviewRepository.findAll(pageable);
     }
 
-    //    @Override
+    @Override
     public Page<Review> listReview(Pageable pageable, ReviewQuery review) {
-        return reviewRepository.findAll(new Specification<Review>() {
-            @Override
-            public Predicate toPredicate(Root<Review> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {                  //search by id
-                List<Predicate> predicates = new ArrayList<>();
-                if (!"".equals(review.getTitle()) && review.getTitle() != null) {                                       // search by type
-                    predicates.add(cb.like(root.<String>get("title"), "%" + review.getTitle() + "%"));
-                }
-//
-//                search by product
-//
-//                if (review.getTypeId() != null {
-//                    predicates.add(cb.equal(root.equals(root.<Type>get("type").get("id"), review.getTypeId()));
-//
-                if (review.isRecommend()) {
-                    predicates.add(cb.equal(root.<Boolean>get("recommend"),review.isRecommend()));
-
-                }
-                cq.where(predicates.toArray(new Predicate[predicates.size()]));
-                return null;
+        return reviewRepository.findAll((Specification<Review>) (root, cq, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            // Search by title
+            if (!"".equals(review.getTitle()) && review.getTitle() != null) {
+                predicates.add(cb.like(root.get("title"), "%" + review.getTitle() + "%"));
             }
-        },pageable);                 // root: searching object; criteriaQuery: searching cons; CriteriaBuilder: searching expression
+            // Search by product
+            if(review.getProductId() != null) {
+                // Get queried product
+                Product product = productRepository.findById(review.getProductId()).orElse(null);
+
+                // Find all the reviews contain this product
+                predicates.add(cb.isMember(product, root.get("relatedProductList")));
+            }
+            // Search by recommend
+            if (review.isRecommend()) {
+                predicates.add(cb.equal(root.<Boolean>get("recommend"),review.isRecommend()));
+
+            }
+            return cb.and(predicates.toArray(new Predicate[0]));
+        }, pageable);
+    }
+
+    @Override
+    public Page<Review> listReviewByCreateTimeDesc(Pageable pageable) {
+        return reviewRepository.findAllByOrderByCreateTimeDesc(pageable);
+    }
+
+    @Override
+    public Page<Review> listReviewByLikesDesc(Pageable pageable) {
+        return reviewRepository.findAll((Specification<Review>) (root, cq, cb) -> {
+            cq.orderBy(cb.desc(cb.size(root.get("likeByUserList"))));
+            return cq.getRestriction();
+        }, pageable);
     }
 
     @Override
@@ -83,18 +99,17 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public Review updateReview(Long id, Review review) {
-        Review r = reviewRepository.findById(id).get();
+        Review r = reviewRepository.findById(id).orElse(null);
         if (r == null) {
             throw new NotFoundException("Nobody has written a relevant review yet.");
         }
-        BeanUtils.copyProperties(r,review);
+        BeanUtils.copyProperties(review, r);
         return reviewRepository.save(r);
     }
 
     @Override
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
-
     }
 }
 

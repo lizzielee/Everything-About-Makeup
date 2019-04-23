@@ -12,6 +12,7 @@ import com.dbproject.makeup.po.Review;
 import com.dbproject.makeup.po.User;
 import com.dbproject.makeup.po.UserInfo;
 import com.dbproject.makeup.service.ReviewService;
+import com.dbproject.makeup.vo.ReviewQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -50,7 +51,7 @@ public class UserReviewController {
 
     @GetMapping("/user_reviews")
     public String reviews(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                          Review review, Model model) {
+                          ReviewQuery review, Model model) {
 //        model.addAttribute("types", typeService.listType());
         model.addAttribute("page", reviewService.listReview(pageable, review));
         return LIST;
@@ -58,7 +59,7 @@ public class UserReviewController {
 
     @PostMapping("/user_reviews/search")
     public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                         Review review, Model model) {
+                         ReviewQuery review, Model model) {
         model.addAttribute("page", reviewService.listReview(pageable, review));
         return "reviews :: reviewList";
     }
@@ -91,7 +92,7 @@ public class UserReviewController {
 
     @PostMapping("/user_reviews")
     public String post(Review review, RedirectAttributes attributes, HttpSession session) {
-        review.setWriteUser((UserInfo) session.getAttribute("user"));
+        review.setWriteUser((User) session.getAttribute("user"));
 //        review.setType(typeService.getType(review.getType().getId()));
 //        review.setTags(tagService.listTag(review.getTagIds()));
         Review r = reviewService.saveReview(review);

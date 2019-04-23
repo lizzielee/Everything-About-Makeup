@@ -46,7 +46,7 @@ public class ReviewController {
 
     @GetMapping("/reviews")
     public String reviews(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                          Review review, Model model) {
+                          ReviewQuery review, Model model) {
 //        model.addAttribute("types", typeService.listType());
         model.addAttribute("page", reviewService.listReview(pageable, review));
         return LIST;
@@ -54,7 +54,7 @@ public class ReviewController {
 
     @PostMapping("/reviews/search")
     public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                         Review review, Model model) {
+                         ReviewQuery review, Model model) {
         model.addAttribute("page", reviewService.listReview(pageable, review));
         return "admin/reviews :: reviewList";
     }

@@ -1,5 +1,7 @@
 package com.dbproject.makeup.po;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,17 +30,17 @@ public class Review {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTime;
 
-    // Relationship: (Write) UserInfo - Review
+    // Relationship: (Write) User - Review
     @ManyToOne
-    private UserInfo writeUser;
+    private User writeUser;
 
-    // Relationship: (Favorite) UserInfo - Review
+    // Relationship: (Favorite) User - Review
     @ManyToMany
-    private List<UserInfo> favoriteByUserList = new ArrayList<>();
+    private List<User> favoriteByUserList = new ArrayList<>();
 
-    // Relationship: (Like) UserInfo - Review
+    // Relationship: (Like) User - Review
     @ManyToMany
-    private List<UserInfo> likeByUserList = new ArrayList<>();
+    private List<User> likeByUserList = new ArrayList<>();
 
     // Relationship: Comment - Review
     @OneToMany(mappedBy = "review")
@@ -163,27 +165,27 @@ public class Review {
         this.relatedProductList = relatedProductList;
     }
 
-    public UserInfo getWriteUser() {
+    public User getWriteUser() {
         return writeUser;
     }
 
-    public void setWriteUser(UserInfo writeUser) {
+    public void setWriteUser(User writeUser) {
         this.writeUser = writeUser;
     }
 
-    public List<UserInfo> getFavoriteByUserList() {
+    public List<User> getFavoriteByUserList() {
         return favoriteByUserList;
     }
 
-    public void setFavoriteByUserList(List<UserInfo> favoriteByUserList) {
+    public void setFavoriteByUserList(List<User> favoriteByUserList) {
         this.favoriteByUserList = favoriteByUserList;
     }
 
-    public List<UserInfo> getLikeByUserList() {
+    public List<User> getLikeByUserList() {
         return likeByUserList;
     }
 
-    public void setLikeByUserList(List<UserInfo> likeByUserList) {
+    public void setLikeByUserList(List<User> likeByUserList) {
         this.likeByUserList = likeByUserList;
     }
 
@@ -211,6 +213,7 @@ public class Review {
                 ", recommend=" + recommend +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", writeUser=" + writeUser +
                 '}';
     }
 }

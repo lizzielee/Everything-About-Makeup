@@ -12,8 +12,8 @@ package com.dbproject.makeup.vo;
 public class ReviewQuery {
 
     private String title;
-    private Long typeId;
     private boolean recommend;
+    private Long productId;
 
     public String getTitle() {
         return title;
@@ -23,12 +23,12 @@ public class ReviewQuery {
         this.title = title;
     }
 
-    public Long getTypeId() {
-        return typeId;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setTypeId(Long typeId) {
-        this.typeId = typeId;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public boolean isRecommend() {
