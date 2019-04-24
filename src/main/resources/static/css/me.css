@@ -1,8 +1,17 @@
 
 body {
     background: url("../img/input_bg.jpg");
+    background: #f9FFF0;
 }
-
+.cus-color{
+    color: #F8CCCC !important;
+}
+.cus-color-gray{
+    color: dimgray !important;
+}
+.cus-title{
+    background: #F8CCCC !important; color: white !important;
+}
 .m-padded-mini {
     padding: 0.2em !important;
 }
