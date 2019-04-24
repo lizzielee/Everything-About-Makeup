@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="admin/_fragments :: head(~{::title})">
+<head th:replace="user/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Backend Management</title>
@@ -9,7 +9,7 @@
 </head>
 <body>
 <!--navigator-->
-<nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment">
+<nav th:replace="user/_fragments :: menu(1)" class="ui inverted attached segment">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
@@ -23,12 +23,10 @@
                     <i class="search inverted link icon"></i>
                 </div>
                 <div class="ui dropdown item">
-                    <div class="text">
-                        Username
-                    </div>
+                    <span th:text="${{session.user.username}}"></span>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                        <a href="#" th:href="@{/user/logout}" class="item">Logout</a>
                     </div>
                 </div>
             </div>
@@ -44,8 +42,12 @@
         <div class="ui success large message">
             <h3>Hi, </h3>
             <p>Welcome to Everything About Makeup!</p>
-            <img src="https://images.unsplash.com/photo-1538022890810-8f4000ca9a10?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3000&q=80" alt="" class="ui rounded bordered fluid image">
         </div>
+
+        <!--<img src="https://images.unsplash.com/photo-1533562530973-424ab36f1448?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="" class="ui rounded bordered fluid image">-->
+        <!--<img src="https://images.unsplash.com/photo-1511941152600-9ff78f15ad66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80" alt="" class="ui rounded bordered fluid image">-->
+        <img src="https://images.unsplash.com/photo-1525373612132-b3e820b87cea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1100&q=80" alt="" class="ui rounded bordered fluid image">
+
     </div>
 </div>
 
@@ -53,7 +55,7 @@
 <footer>
 </footer>
 
-<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<!--/*/<th:block th:replace="user/_fragments :: script">/*/-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
 <!--/*/</th:block>/*/-->

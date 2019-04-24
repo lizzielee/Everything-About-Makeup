@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="_fragments :: head(~{::title})">
+<head th:replace="user/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="MyReview" content="width=device-width, initial-scale=1.0">
     <title>Review Management</title>
@@ -10,7 +10,7 @@
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+<nav th:replace="user/_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">Review Management</h2>
@@ -40,13 +40,11 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" th:href="@{/user_reviews/user-input}" class=" item">Post</a>
-            <a href="#" th:href="@{/user_reviews}" class="teal active item">List</a>
+            <a href="#" th:href="@{/user/review-input}" class=" item">Post</a>
+            <a href="#" th:href="@{/user/user_reviews}" class="teal active item">List</a>
         </div>
     </div>
 </div>
-
-<span th:text="${page}"></span>
 
 <!--中间内容-->
 <div  class="m-container-small m-padded-tb-big">
@@ -109,26 +107,21 @@
                     <th>Operation</th>
                 </tr>
                 </thead>
+
                 <tbody>
-                <tr th:each="review,iterStat : ${page}">
-                <!--<tr th:each="review,iterStat : ${review}">-->
-                    <!--/*-->
+                <tr th:each="review, iterStat : ${page}">
+
                     <td th:text="${iterStat.count}">1</td>
-                    <!--/*-->
                     <td th:text="${review.title}">Creme Cheek Colour</td>
-                    <!--&lt;!&ndash;/*&ndash;&gt;-->
-                    <!--<td th:text="${product.detailedProductCategory}">Skin</td>-->
-                    <!--/*-->
                     <td th:text="${review.recommend} ? 'Yes':'No'">Yes</td>
-                    <!--/*-->
-                    <td th:text="${review.published} ? 'Published':'Draft'">Draft</td>
-                    <!--/*-->
-                    <td th:text="${review.updateTime}">2019-04-02 09:45</td>
+                    <td th:review="${review.published} ? 'Published':'Draft'">Published</td>
+                    <td th:review="${review.updateTime}">2019-04-02 09:45</td>
                     <td>
-                        <a href="#" th:href="@{/user/user_reviews/{id}/input(id=${review.id})}" class="ui mini teal basic button">Edit</a>
-                        <a href="#" th:href="@{/user/user_reviews/{id}/delete(id=${review.id})}" class="ui mini red basic button">Delete</a>
+                        <a href="#" class="ui mini teal basic button">Edit</a>
+                        <a href="#" class="ui mini red basic button">Delete</a>
                     </td>
                 </tr>
+
                 </tbody>
                 <tfoot>
                 <tr>
@@ -137,7 +130,7 @@
                             <a onclick="page(this)" th:attr="data-page=${page.number}-1" class="item" th:unless="${page.first}">Previous</a>
                             <a onclick="page(this)" th:attr="data-page=${page.number}+1" class=" item" th:unless="${page.last}">Next</a>
                         </div>
-                        <a href="#" th:href="@{/user_reviews/input}" class="ui mini right floated teal basic button">Add New</a>
+                        <a href="#" th:href="@{/user/review-input}" class="ui mini right floated teal basic button">Add New</a>
                     </th>
                 </tr>
                 </tfoot>
@@ -150,7 +143,6 @@
             </div>
 
         </div>
-
     </div>
 </div>
 

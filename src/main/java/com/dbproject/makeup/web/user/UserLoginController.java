@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/user")
 public class UserLoginController {
 
     private final UserService userService;
@@ -25,7 +25,7 @@ public class UserLoginController {
 
     @GetMapping
     public String loginPage() {
-        return "admin/login";
+        return "user/login";
     }
 
     @PostMapping("/login")
@@ -37,17 +37,17 @@ public class UserLoginController {
         if(user != null) {  // Correct user
             user.setPassword(null);
             session.setAttribute("user", user);
-            return "admin/index";
+            return "redirect:/";
         }
         else {  // Invalid username/password
             attributes.addFlashAttribute("message", "Invalid username/password");
-            return "redirect:/admin";
+            return "redirect:/user";
         }
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("user");
-        return "redirect:/admin";
+        return "redirect:/user";
     }
 }
