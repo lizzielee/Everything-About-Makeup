@@ -46,6 +46,12 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
     public Page<Product> listProduct(Pageable pageable) {
         return productRepository.findAll(pageable);
     }

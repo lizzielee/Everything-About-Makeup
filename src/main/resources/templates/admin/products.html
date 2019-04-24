@@ -62,7 +62,7 @@
             <td th:text="${cur_product.info}"></td>
             <td>
                 <a class="image" href="#">
-                    <img th:src="${cur_product.image}">
+                    <img th:src="${cur_product.image}" class="ui small image">
                 </a>
             </td>
             <td th:text="${cur_product.detailedProductCategory.detailedCategoryName}"></td>
@@ -72,12 +72,23 @@
                         th:data-pName="${cur_product.name}"
                         th:data-pInfo="${cur_product.info}"
                         th:data-pImage="${cur_product.image}"
-                        th:data-pDCat="${cur_product.detailedProductCategory.detailedCategoryId}"
+                        th:data-pDCatName="${cur_product.detailedProductCategory.detailedCategoryName}"
+                        th:data-pDCatID="${cur_product.detailedProductCategory.detailedCategoryId}"
                         th:onclick="javascript:edit(this.getAttribute('data-pId'), this.getAttribute('data-pName'),
-                        this.getAttribute('data-pInfo'), this.getAttribute('data-pImage'), this.getAttribute('data-pDCat'));">
+                        this.getAttribute('data-pInfo'), this.getAttribute('data-pImage'), this.getAttribute('data-pDCatName'),
+                        this.getAttribute('data-pDCatID'));">
                     <i class="edit icon"></i>Edit
                 </button>
-                <button class="ui floated small negative labeled icon button">
+                <button class="ui floated small negative labeled icon button"
+                        th:data-pId="${cur_product.productId}"
+                        th:data-pName="${cur_product.name}"
+                        th:data-pInfo="${cur_product.info}"
+                        th:data-pImage="${cur_product.image}"
+                        th:data-pDCatName="${cur_product.detailedProductCategory.detailedCategoryName}"
+                        th:data-pDCatID="${cur_product.detailedProductCategory.detailedCategoryId}"
+                        th:onclick="javascript:del(this.getAttribute('data-pId'), this.getAttribute('data-pName'),
+                        this.getAttribute('data-pInfo'), this.getAttribute('data-pImage'), this.getAttribute('data-pDCatName'),
+                        this.getAttribute('data-pDCatID'));">
                     <i class="trash icon"></i>Delete
                 </button>
             </td>
@@ -87,8 +98,8 @@
         <tr>
             <th colspan="5">
                 <button class="ui right floated small primary labeled icon button" id="new-btn"
-                        th:onclick="javascript:newCategory();">
-                    <i class="pencil icon"></i>New Category
+                        th:onclick="javascript:newProduct();">
+                    <i class="pencil icon"></i>New Product
                 </button>
             </th>
         </tr>
@@ -99,7 +110,7 @@
 <br>
 
 <!--Edit/New Modal-->
-<div class="ui basic small modal">
+<div class="ui small modal">
     <div class="ui icon header">
         <i class="archive icon"></i>
         <span id="modal_header"></span>
@@ -118,21 +129,21 @@
                        placeholder="Product Image">
             </div>
             <div class="field">
-                <label>Country</label>
-                <div class="ui fluid search selection dropdown">
+                <label>Category</label>
+                <div class="ui fluid selection dropdown">
                     <input type="hidden" name="detailedProductCategory.detailedCategoryId"
-                           th:value="*{detailedProductCategory}!=null ? *{detailedProductCategory.detailedCategoryId}">
+                           th:value="*{detailedProductCategory} ? detailedProductCategory.detailedCategoryId">
                     <i class="dropdown icon"></i>
                     <div class="default text">Select Detailed Category</div>
-                    <div class="menu">
+                    <div class="ui menu">
                         <div th:each="g_cat : ${category}">
                             <div class="header item">
                                 <span class="text" th:text="${g_cat.generalCategoryName}">General Category</span>
                             </div>
-                            <div class="item" th:each="d_cat : ${g_cat.detailedProductCategoryList}"
+                            <a class="item" th:each="d_cat : ${g_cat.detailedProductCategoryList}"
                                  th:data-value="${d_cat.detailedCategoryId}">
                                 <span th:text="${d_cat.detailedCategoryName}"></span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -141,11 +152,11 @@
         </form>
     </div>
     <div class="actions">
-        <button class="ui green ok inverted button">
+        <button class="ui green ok button">
             <i class="checkmark icon"></i>
             Save
         </button>
-        <button class="ui red basic cancel inverted button">
+        <button class="ui red basic cancel button">
             <i class="remove icon"></i>
             Cancel
         </button>
@@ -176,16 +187,59 @@
 
     // New
     function newProduct() {
-    
+        // Modal header & content
+        $('#modal_header').text("New Product");
+        $('#modal_content').text("Create new product: ");
+
+        // Modal Form
+        $('#modal_form').form().show();
+
+        // Show Modal
+        $('.ui.modal').modal({
+            onApprove: function () {
+                var approve = false;
+                $('#modal_form').form(
+                    {
+                        fields: {
+                            name: {
+                                identifier: 'name',
+                                rules: [{
+                                    type: 'empty',
+                                    prompt: "Product name cannot be empty!"
+                                }]
+                            }
+                        }
+                    },
+                    {
+                        onSuccess: function () {
+                            approve = true;
+                        }
+                    }).submit();
+                return approve;
+            }
+        }).modal('show');
     }
     
     // Delete
-    function del() {
-        
+    function del(pid, pname, pinfo, pimage, pdcatname, pdcatid) {
+        // Modal header & content
+        $('#modal_header').text("Delete");
+        $('#modal_content').text("Delete product " + pname + "?");
+
+        // Modal Form
+        $('#modal_form').form().hide();
+
+        // Show Modal
+        $('.ui.modal').modal({
+            onApprove: function () {
+                $('[name="productId"]').val(pid);
+                $('#modal_form').submit();
+            }
+        }).modal('show');
     }
 
     // Edit
-    function edit(pid, pname, pinfo, pimage, pdcat) {
+    function edit(pid, pname, pinfo, pimage, pdcatname, pdcatid) {
         // Modal header & content
         $('#modal_header').text("Edit");
         $('#modal_content').text("Edit product: ");
@@ -195,11 +249,33 @@
         $('[name="name"]').val(pname);
         $('[name="info"]').val(pinfo);
         $('[name="image"]').val(pimage);
-        $('[name="detailedProductCategory.detailedCategoryId"]').val(pdcat);
+        $('[name="detailedProductCategory.detailedCategoryId"]').val(pdcatid);
         $('#modal_form').form().show();
 
         // Show Modal
-        $('.ui.basic.modal').modal('show');
+        $('.ui.modal').modal({
+            onApprove: function () {
+                var approve = false;
+                $('#modal_form').form(
+                    {
+                        fields: {
+                            name: {
+                                identifier: 'name',
+                                rules: [{
+                                    type: 'empty',
+                                    prompt: "Product name cannot be empty!"
+                                }]
+                            }
+                        }
+                    },
+                    {
+                        onSuccess: function () {
+                            approve = true;
+                        }
+                    }).submit();
+                return approve;
+            }
+        }).modal('show');
     }
 </script>
 </body>

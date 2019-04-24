@@ -11,8 +11,9 @@ public interface ProductService {
 
     Product getProduct(Long id);
 
-    @Transactional
     Product updateProduct(Long id, Product product);
+
+    void deleteProduct(Long id);
 
     Page<Product> listProduct(Pageable pageable);
 
