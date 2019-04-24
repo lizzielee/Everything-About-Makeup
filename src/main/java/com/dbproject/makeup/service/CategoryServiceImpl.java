@@ -39,8 +39,6 @@ public class CategoryServiceImpl implements CategoryService{
         return detailedCategoryRepository.save(category);
     }
 
-
-
     @Transactional
     @Override
     public DetailedProductCategory getDetailedProductCategory(Long id) {
@@ -100,6 +98,13 @@ public class CategoryServiceImpl implements CategoryService{
         BeanUtils.copyProperties(category, originCategory);
         return generalCategoryRepository.save(originCategory);
     }
+
+    @Override
+    public List<DetailedProductCategory> listDetailedProductCategory() {
+        return detailedCategoryRepository.findAll();
+    }
+
+
 
     @Transactional
     @Override

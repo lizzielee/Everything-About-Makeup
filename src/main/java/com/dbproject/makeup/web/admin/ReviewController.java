@@ -45,7 +45,7 @@ public class ReviewController {
 //    private TagService tagService;
 
     @GetMapping("/reviews")
-    public String reviews(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String reviews(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                           Review review, Model model) {
 //        model.addAttribute("types", typeService.listType());
         model.addAttribute("page", reviewService.listReview(pageable, review));
@@ -53,19 +53,19 @@ public class ReviewController {
     }
 
     @PostMapping("/reviews/search")
-    public String search(@PageableDefault(size = 8, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          Review review, Model model) {
         model.addAttribute("page", reviewService.listReview(pageable, review));
         return "admin/reviews :: reviewList";
     }
 
 
-//    @GetMapping("/reviews/input")
-//    public String input(Model model) {
+    @GetMapping("/reviews/input")
+    public String input(Model model) {
 //        setTypeAndTag(model);
-//        model.addAttribute("review", new Review());
-//        return INPUT;
-//    }
+        model.addAttribute("review", new Review());
+        return INPUT;
+    }
 //
 //    private void setTypeAndTag(Model model) {
 ////        model.addAttribute("types", typeService.listType());
@@ -75,7 +75,7 @@ public class ReviewController {
 //
 //    @GetMapping("/reviews/{id}/input")
 //    public String editInput(@PathVariable Long id, Model model) {
-//        setTypeAndTag(model);
+////        setTypeAndTag(model);
 //        Review review = reviewService.getReview(id);
 ////        review.init();
 //        model.addAttribute("review",review);

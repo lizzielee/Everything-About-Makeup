@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:replace="${title}">Backend Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="../../static/css/editormd.min.css" th:href="@{/css/editormd.min.css}">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.css" th:href="@{/css/editormd.min.css}">
     <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}">
     <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
 </head>
@@ -25,20 +25,21 @@
                 <i class="search inverted link icon"></i>
             </div>
             <div class="right m-item m-mobile-hide menu">
-            <div class="ui dropdown item">
-                <!--<img class="ui avatar image" src = "https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" th:src="@{{session.user.avatar}}}">-->
-                <img class="ui avatar image" src = "https://images.unsplash.com/photo-1505088043216-2f88746b11a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=732&q=80">
-                <!--<span th:text="${{session.user.nickname}}">UserName</span>-->
-                <span>UserName</span>
+                <div class="ui dropdown item">
+                    <!--<img class="ui avatar image" src = "https://images.unsplash.com/photo-1521117177129-ca6b2e68cb26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80" th:src="@{{session.user.avatar}}}">-->
+                    <img class="ui avatar image"
+                         src="https://images.unsplash.com/photo-1505088043216-2f88746b11a9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=732&q=80">
+                    <!--<span th:text="${{session.user.nickname}}">UserName</span>-->
+                    <span>UserName</span>
 
-                <!--<div class="text">Username</div>-->
+                    <!--<div class="text">Username</div>-->
 
-                <i class="dropdown icon"></i>
-                <div class="ui menu">
-                    <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                    <i class="dropdown icon"></i>
+                    <div class="ui menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
