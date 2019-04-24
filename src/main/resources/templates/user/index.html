@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.csss">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+<!--navigator-->
+<nav th:replace="admin/_fragments :: menu(1)" class="ui inverted attached segment">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini home icon"></i>User</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini bars icon"></i>Category</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini heart icon"></i>Review</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="mini key icon"></i>Product</a>
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon transparent input m-margin-tb-tiny">
+                    <input type="text" placeholder="Search...." class="white item">
+                    <i class="search inverted link icon"></i>
+                </div>
+                <div class="ui dropdown item">
+                    <div class="text">
+                        Username
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/admin/logout}" class="item">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--contents-->
+<br>
+<br>
+<div class="m-container-small m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui success large message">
+            <h3>Hi, </h3>
+            <p>Welcome to Everything About Makeup!</p>
+            <img src="https://images.unsplash.com/photo-1538022890810-8f4000ca9a10?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3000&q=80" alt="" class="ui rounded bordered fluid image">
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<footer>
+</footer>
+
+<!--/*/<th:block th:replace="admin/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+<!--/*/</th:block>/*/-->
+</body>
+</html>
