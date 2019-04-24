@@ -28,6 +28,11 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @GetMapping("/categories")
+    public String list() {
+        return "redirect:/admin/categories/1";
+    }
+
     @GetMapping("/categories/{g_cat}")
     public String list(@Qualifier("detailed") @PageableDefault(size = 50, sort = {"detailedCategoryId"}, direction = Sort.Direction.ASC)
                                    Pageable dPageable,

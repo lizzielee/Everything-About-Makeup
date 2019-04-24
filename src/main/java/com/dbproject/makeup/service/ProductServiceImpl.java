@@ -1,7 +1,9 @@
 package com.dbproject.makeup.service;
 
+import com.dbproject.makeup.NotFoundException;
 import com.dbproject.makeup.dao.ProductRepository;
 import com.dbproject.makeup.po.Product;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +31,17 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public Product getProduct(Long id) {
         return productRepository.findById(id).orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        Product originProduct = productRepository.findById(id).orElse(null);
+        if(originProduct == null) {
+            throw new NotFoundException("Invalid product");
+        }
+        BeanUtils.copyProperties(product, originProduct);
+        return productRepository.save(originProduct);
     }
 
     @Transactional

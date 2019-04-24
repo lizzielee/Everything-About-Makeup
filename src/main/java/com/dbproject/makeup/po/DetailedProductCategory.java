@@ -62,7 +62,7 @@ public class DetailedProductCategory {
         return "DetailedProductCategory{" +
                 "detailedCategoryId=" + detailedCategoryId +
                 ", detailedCategoryName='" + detailedCategoryName + '\'' +
-                ", generalProductCategory=" + generalProductCategory +
+                ", generalProductCategory=" + generalProductCategory.getGeneralCategoryId() +
                 '}';
     }
 }

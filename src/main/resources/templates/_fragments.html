@@ -16,7 +16,7 @@
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui white header item">EVERYTHING ABOUT MAKEUP</h2>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i
                     class="mini home icon"></i>Home</a>
 
             <div class="ui inverted pointing dropdown link m-item m-mobile-hide item">
@@ -24,20 +24,23 @@
                 <span class="text">Explore</span>
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <div class = "item" th:each="g_cat : ${category}">
+                    <div class="item" th:each="g_cat : ${category}">
                         <i class="dropdown icon"></i>
                         <span class="text" th:text="${g_cat.generalCategoryName}"></span>
                         <div class="menu">
-                            <div class="item" th:each="d_cat : ${g_cat.detailedProductCategoryList}">
+                            <a class="item" th:each="d_cat : ${g_cat.detailedProductCategoryList}" href="#"
+                               th:href="@{/explore/{gid}/{did}(gid=${g_cat.generalCategoryId}, did=${d_cat.detailedCategoryId})}">
                                 <span th:text="${d_cat.detailedCategoryName}"></span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i
+            <a href="#" class="m-item item m-mobile-hide" th:href="@{/user/favorite}"
+               th:classappend="${n==3} ? 'active'"><i
                     class="mini heart icon"></i>Favorite</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i
+            <a href="#" class="m-item item m-mobile-hide" th:href="@{/user/review-input}"
+               th:classappend="${n==4} ? 'active'"><i
                     class="mini book icon"></i>Post</a>
             <div class="ui icon transparent input m-item m-mobile-hide item">
                 <input type="text" placeholder="Search...." class="white item">
@@ -56,19 +59,16 @@
 
                         <i class="dropdown icon"></i>
                         <div class="ui menu">
-                            <a href="#" th:href="@{/admin/logout}" class="item">Log Out</a>
+                            <a href="#" th:href="@{/user/logout}" class="item">Log Out</a>
                         </div>
                     </div>
                 </div>
 
                 <!--Logout Users-->
-                <div th:unless="${{session.user}}" class="ui item">
+                <a th:unless="${{session.user}}" class="ui item" href="#" th:href="@{/user}">
                     <i class="user outline icon"></i>
-                    <!--<span ">UserName</span>-->
-                    <div class="ui inline pointing floating dropdown m-item">
-                        <span>Login</span>
-                    </div>
-                </div>
+                    <div class="ui inline floating item" th:href="@{/user}">Login</div>
+                </a>
             </div>
         </div>
     </div>

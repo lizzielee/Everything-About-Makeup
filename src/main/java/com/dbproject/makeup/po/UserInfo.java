@@ -14,6 +14,7 @@ public class UserInfo {
 
     @OneToOne
     @MapsId
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String realName;
