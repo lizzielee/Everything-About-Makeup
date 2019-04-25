@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.css" th:href="@{/css/editormd.min.css}">
     <link rel="stylesheet" href="../../static/css/animate.css" th:href="@{/css/animate.css}">
     <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+
+
 </head>
 <body>
 
@@ -15,7 +17,7 @@
 <nav th:fragment="menu(n)" class="ui inverted attached segment">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
-            <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
+            <h2 class="ui white header item">EVERYTHING ABOUT MAKEUP</h2>
             <a href="#" class="m-item item m-mobile-hide" th:href="@{/admin/users}" th:classappend="${n==1} ? 'active'">
                 <i class="mini home icon"></i>User
             </a>

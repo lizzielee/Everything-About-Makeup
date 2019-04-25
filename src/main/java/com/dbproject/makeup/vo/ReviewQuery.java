@@ -14,6 +14,7 @@ public class ReviewQuery {
     private String title;
     private boolean recommend;
     private Long productId;
+    private Long userId;
 
     public String getTitle() {
         return title;
@@ -37,5 +38,13 @@ public class ReviewQuery {
 
     public void setRecommend(boolean recommend) {
         this.recommend = recommend;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

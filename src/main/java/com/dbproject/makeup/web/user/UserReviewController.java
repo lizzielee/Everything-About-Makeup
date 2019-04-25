@@ -54,16 +54,23 @@ public class UserReviewController {
 
     @GetMapping("/user_reviews")
     public String reviews(@PageableDefault(size = 10, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                          ReviewQuery review, Model model) {
+                          Model model, HttpSession session) {
+        // Get User
+        User user = (User)session.getAttribute("user");
+
         model.addAttribute("cat", categoryService.listDetailedProductCategory());
-        model.addAttribute("page", reviewService.listReview(pageable, review));
+        model.addAttribute("page", reviewService.listReviewByUserId(pageable, user.getUserId()));
         return LIST;
     }
 
     @PostMapping("/user_reviews/search")
     public String search(@PageableDefault(size = 10, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
-                         ReviewQuery review, Model model) {
-        model.addAttribute("page", reviewService.listReview(pageable, review));
+                         ReviewQuery query, Model model, HttpSession session) {
+        // Get User
+        User user = (User)session.getAttribute("user");
+        query.setUserId(user.getUserId());
+
+        model.addAttribute("page", reviewService.listReview(pageable, query));
         return "user/user_reviews :: reviewList";
     }
 

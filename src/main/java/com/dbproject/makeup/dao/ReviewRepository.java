@@ -16,6 +16,8 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, JpaSpecificationExecutor<Review> {
 
+    Page<Review> findAllByWriteUser_UserId(Pageable pageable, Long userId);
+
     Page<Review> findAllByOrderByCreateTimeDesc(Pageable pageable);
 
     Page<Review> findAllByRelatedProductListContaining(Pageable pageable, Product product);

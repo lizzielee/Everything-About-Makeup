@@ -11,6 +11,8 @@ public interface ReviewService {
 
     Page<Review> listReview(Pageable pageable);
 
+    Page<Review> listReviewByUserId(Pageable pageable, Long userId);
+
     Page<Review> listConvertReviewByCreateTimeDesc(Pageable pageable);
 
     Page<Review> listConvertReviewByLikesDesc(Pageable pageable);

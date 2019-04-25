@@ -77,6 +77,10 @@ public class ReviewServiceImpl implements ReviewService{
     public Page<Review> listReview(Pageable pageable, ReviewQuery query) {
         return reviewRepository.findAll((Specification<Review>) (root, cq, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
+            // Search by userId
+            if(query.getUserId() != null) {
+                predicates.add(cb.equal(root.get("writeUser").get("userId"), query.getUserId()));
+            }
             // Search by title
             if (!"".equals(query.getTitle()) && query.getTitle() != null) {
                 predicates.add(cb.like(root.get("title"), "%" + query.getTitle() + "%"));
@@ -96,6 +100,12 @@ public class ReviewServiceImpl implements ReviewService{
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         }, pageable);
+    }
+
+    @Transactional
+    @Override
+    public Page<Review> listReviewByUserId(Pageable pageable, Long userId) {
+        return reviewRepository.findAllByWriteUser_UserId(pageable, userId);
     }
 
     @Transactional
@@ -153,6 +163,7 @@ public class ReviewServiceImpl implements ReviewService{
     @Transactional
     @Override
     public Review updateReview(Long id, Review review) {
+        review.setUpdateTime(new Date());
         Review r = reviewRepository.findById(id).orElse(null);
         if (r == null) {
             throw new NotFoundException("Nobody has written a relevant review yet.");
