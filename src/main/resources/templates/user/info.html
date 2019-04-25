@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+</head>
+<body>
+
+<!--navigator-->
+<nav th:replace="user/_fragments :: menu(1)" class="ui inverted attached segment">
+</nav>
+
+<div class="m-container-large m-padded-tb-big">
+    <div class="ui container">
+        <div class="ui three column stackable grid login-header">
+            <div class="column"></div>
+            <div class="column">
+                <div class="ui grid">
+                    <div class="row header-row1 align-center"></div>
+                    <div class="row text-center align-center">
+                        <h1 class="ui header white">
+                            <i class="settings icon"></i>
+                            info
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="column"></div>
+        </div>
+        <div class="ui three column stackable grid login-div">
+            <div class="column"></div>
+            <div class="column">
+                <form id="info-form" class="ui fluid form segment" th:action="@{/user/info}" method="post"
+                      th:object="${userInfo}">
+                    <div class="field">
+                        <label class="">Real Name</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="realName" placeholder="Real Name" th:value="*{realName}">
+                            <i class="user icon"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">Gender</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="sex" placeholder="Gender" th:value="*{sex}">
+                            <i class="user icon"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">Avatar</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="profilePicture" placeholder="Avatar" th:value="*{profilePicture}">
+                            <i class="smile outline icon"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">Email</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="email" placeholder="Email" th:value="*{email}">
+                            <i class="address card icon"></i>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="">Phone</label>
+                        <div class="ui left icon input">
+                            <input type="text" name="phone" placeholder="Phone" th:value="*{phone}">
+                            <i class="phone icon"></i>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="userInfoId" th:value="*{userInfoId}">
+
+                    <div class="inline field">
+                        <div id="info-btn" class="ui secondary submit button">Update</div>
+                    </div>
+                    <div class="ui error mini message"></div>
+                    <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+                </form>
+            </div>
+            <div class="column"></div>
+        </div>
+    </div>
+</div>
+
+<!--/*/<th:block th:replace="user/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('#info-btn').click(function () {
+        $('#info-form').submit();
+    });
+</script>
+
+</body>
+</html>

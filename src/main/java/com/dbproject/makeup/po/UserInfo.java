@@ -10,11 +10,10 @@ public class UserInfo {
 
     // Relationship: UserInfo - User
     @Id
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userInfoId;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = {CascadeType.MERGE})
     private User user;
 
     private String realName;
@@ -43,12 +42,12 @@ public class UserInfo {
     public UserInfo() {
     }
 
-    public int getUserId() {
-        return userId;
+    public Long getUserInfoId() {
+        return userInfoId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserInfoId(Long userInfoId) {
+        this.userInfoId = userInfoId;
     }
 
     public String getRealName() {
@@ -142,13 +141,14 @@ public class UserInfo {
     @Override
     public String toString() {
         return "UserInfo{" +
-                "userId=" + userId +
+                "userInfoId=" + userInfoId +
                 ", realName='" + realName + '\'' +
                 ", sex='" + sex + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", userLevel=" + userLevel +
+                ", user=" + user +
                 '}';
     }
 }

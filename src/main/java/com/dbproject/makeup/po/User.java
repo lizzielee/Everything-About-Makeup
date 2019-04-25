@@ -9,7 +9,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    private int userId;
+    private Long userId;
 
     private String username;
     private String password;
@@ -25,11 +25,11 @@ public class User {
     public User() {
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
