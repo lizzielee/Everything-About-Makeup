@@ -11,7 +11,7 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int commentId;
+    private Long id;
 
     private String content;
     @Temporal(TemporalType.TIMESTAMP)
@@ -31,15 +31,34 @@ public class Comment {
     @ManyToOne
     private Comment parentComment;
 
+    private boolean writerComment;
+
     public Comment() {
     }
 
-    public int getCommentId() {
-        return commentId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCommentId(int commentId) {
-        this.commentId = commentId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Comment> getReplyComments() {
+        return childrenCommentList;
+    }
+
+    public void setReplyComments(List<Comment> replyComments) {
+        this.childrenCommentList = replyComments;
+    }
+
+
+    public boolean isWriterComment() {
+        return writerComment;
+    }
+
+    public void setWriterComment(boolean writerComment) {
+        this.writerComment = writerComment;
     }
 
     public String getContent() {
@@ -74,14 +93,6 @@ public class Comment {
         this.createTime = createTime;
     }
 
-    public List<Comment> getChildrenCommentList() {
-        return childrenCommentList;
-    }
-
-    public void setChildrenCommentList(List<Comment> childrenCommentList) {
-        this.childrenCommentList = childrenCommentList;
-    }
-
     public Comment getParentComment() {
         return parentComment;
     }
@@ -93,8 +104,14 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "commentId=" + commentId +
+                "id=" + id +
                 ", content='" + content + '\'' +
+                ", createTime=" + createTime +
+                ", userInfo=" + userInfo +
+                ", review=" + review +
+                ", childrenComment=" + childrenCommentList +
+                ", parentComment=" + parentComment +
+                ", writerComment=" + writerComment +
                 '}';
     }
 }

@@ -61,13 +61,17 @@
                     <a class="avatar">
                         <img th:src="${review.writeUser.userInfo} ? ${review.writeUser.userInfo.profilePicture}">
                     </a>
+
                     <div class="content">
                         <a class="author" th:text="${review.writeUser} ? ${review.writeUser.username}">Author</a>
                         <div class="metadata">
                             <div class="date" th:text="${#dates.format(review.createTime,'yyyy-MM-dd')}"></div>
                         </div>
-                        <div class="text typo typo-selection js-toc-content m-padded-tb-small" th:utext="${review.content}">
-                        </div>
+                        <a th:href="@{/review/{id}(id=${review.reviewId})}">
+                            <div class="text typo typo-selection js-toc-content m-padded-tb-small"
+                                 th:utext="${review.content}">
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div class="ui primary submit labeled icon button">

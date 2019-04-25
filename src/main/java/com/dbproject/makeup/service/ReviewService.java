@@ -3,6 +3,7 @@ import com.dbproject.makeup.po.Review;
 import com.dbproject.makeup.vo.ReviewQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ReviewService {
     Review getReview(Long id);
@@ -27,4 +28,6 @@ public interface ReviewService {
 
     void deleteReview(Long id);
 
+    @Transactional
+    Page<Review> listReview(String query, Pageable pageable);
 }

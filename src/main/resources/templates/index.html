@@ -64,7 +64,7 @@
                     <div class="ui padded vertical segment m-padded-tb-large">
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
-                                <h3 class="ui header" th:text="${review.title}"></h3>
+                                <h3 class="ui header" ><a href="#" th:href="@{/review/{id}(id=${review.reviewId})}" target="_blank" class="m-black" th:text="${review.title}">Test Review Title</a></h3>
                                 <div class="text typo typo-selection js-toc-content m-padded-tb-large"
                                      th:utext="${review.content}">
                                     Part of content
@@ -98,8 +98,8 @@
 
                             <!--Image-->
                             <div class="five wide column">
-                                <a href="#" target="_blank">
-                                    <img th:src="${review.firstPicture}" alt="" class="ui rounded image">
+                                <a href="#" th:href="@{/review/{id}(id=${review.reviewId})}" target="_blank">
+                                    <img src="https://unsplash.it/800/450?image=1005" th:src="@{${review.firstPicture}}" alt="" class="ui small rounded image">
                                 </a>
                             </div>
                         </div>
@@ -123,7 +123,11 @@
                     <div class="ui padded vertical segment m-padded-tb-large">
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
-                                <h3 class="ui header" th:text="${review.title}"></h3>
+                                <h3 class="ui header" >
+                                    <a href="#" th:href="@{/review/{id}(id=${review.reviewId})}" target="_blank" class="m-black" th:text="${review.title}">
+                                        Test Review Title
+                                    </a>
+                                </h3>
                                 <div class="text typo typo-selection js-toc-content aligned m-padded-tb-large"
                                      th:utext="${review.content}">
                                     Part of content
@@ -157,8 +161,8 @@
 
                             <!--Image-->
                             <div class="five wide column">
-                                <a href="#" target="_blank">
-                                    <img th:src="${review.firstPicture}" alt="" class="ui rounded image">
+                                <a href="#" th:href="@{/review/{id}(id=${review.reviewId})}" target="_blank">
+                                    <img src="https://unsplash.it/800/450?image=1005" th:src="@{${review.firstPicture}}" alt="" class="ui small rounded image">
                                 </a>
                             </div>
                         </div>

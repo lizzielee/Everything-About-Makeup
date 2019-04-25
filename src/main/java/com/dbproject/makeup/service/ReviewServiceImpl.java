@@ -177,5 +177,12 @@ public class ReviewServiceImpl implements ReviewService{
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
     }
+
+    @Transactional
+    @Override
+    public Page<Review> listReview(String query, Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findByQuery(query, pageable);
+        return listReviewConvert(reviews);
+    }
 }
 

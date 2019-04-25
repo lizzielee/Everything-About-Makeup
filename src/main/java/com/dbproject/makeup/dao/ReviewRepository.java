@@ -21,4 +21,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, JpaSpecif
     Page<Review> findAllByOrderByCreateTimeDesc(Pageable pageable);
 
     Page<Review> findAllByRelatedProductListContaining(Pageable pageable, Product product);
+
+    @Query("select r from Review r where r.title like ?1 or r.content like ?1")
+    Page<Review> findByQuery(String query, Pageable pageable);
 }
