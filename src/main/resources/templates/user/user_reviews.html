@@ -117,8 +117,8 @@
                     <td th:review="${review.published} ? 'Published':'Draft'">Published</td>
                     <td th:review="${review.updateTime}">2019-04-02 09:45</td>
                     <td>
-                        <a href="#" class="ui mini teal basic button">Edit</a>
-                        <a href="#" class="ui mini red basic button">Delete</a>
+                        <a href="#" class="ui mini teal basic button" th:href="@{/user/user_reviews/{id}/input(id=${review.reviewId})}">Edit</a>
+                        <a href="#" class="ui mini red basic button" th:href="@{/user/user_reviews/{id}/delete(id=${review.reviewId})}">Delete</a>
                     </td>
                 </tr>
 

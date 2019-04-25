@@ -1,7 +1,5 @@
 package com.dbproject.makeup.po;
 
-import org.hibernate.annotations.Formula;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +11,12 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int reviewId;
+    private Long reviewId;
 
     private String title;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
     private String content;
     private String firstPicture;
     private String flag;
@@ -50,14 +51,17 @@ public class Review {
     @ManyToMany(cascade = {CascadeType.PERSIST})
     private List<Product> relatedProductList = new ArrayList<>();
 
+    @Transient
+    private String productIds;
+
     public Review() {
     }
 
-    public int getReviewId() {
+    public Long getReviewId() {
         return reviewId;
     }
 
-    public void setReviewId(int reviewId) {
+    public void setReviewId(Long reviewId) {
         this.reviewId = reviewId;
     }
 
@@ -195,6 +199,36 @@ public class Review {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    public String getProductIds() {
+        return productIds;
+    }
+
+    public void setProductIds(String productIds) {
+        this.productIds = productIds;
+    }
+
+    public void init() {
+        this.productIds = productsToIds(this.getRelatedProductList());
+    }
+
+    private String productsToIds(List<Product> products) {
+        if(!products.isEmpty()) {
+            StringBuilder builder = new StringBuilder();
+            boolean isFirst = true;
+            for(Product product: products) {
+                if(isFirst) {
+                    builder.append(product.getProductId());
+                    isFirst = false;
+                }
+                else {
+                    builder.append(",").append(product.getProductId());
+                }
+            }
+            return builder.toString();
+        }
+        return productIds;
     }
 
     @Override

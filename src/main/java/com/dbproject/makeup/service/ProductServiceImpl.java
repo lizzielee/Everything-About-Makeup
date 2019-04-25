@@ -11,6 +11,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService{
 
@@ -52,8 +55,27 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
+    public List<Product> listProduct() {
+        return productRepository.findAll();
+    }
+
+    @Transactional
+    @Override
     public Page<Product> listProduct(Pageable pageable) {
         return productRepository.findAll(pageable);
+    }
+
+    @Transactional
+    @Override
+    public List<Product> listProduct(String productIds) {
+        List<Long> list = new ArrayList<>();
+        if(!"".equals(productIds) && productIds != null) {
+            String[] products = productIds.split(",");
+            for(String product: products) {
+                list.add(Long.valueOf(product));
+            }
+        }
+        return productRepository.findAllById(list);
     }
 
     @Transactional

@@ -5,6 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface ProductService {
 
     Product saveProduct(Product product);
@@ -15,7 +17,11 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
+    List<Product> listProduct();
+
     Page<Product> listProduct(Pageable pageable);
 
     Page<Product> listProduct(Pageable pageable, Long detailedCategoryId);
+
+    List<Product> listProduct(String productIds);
 }

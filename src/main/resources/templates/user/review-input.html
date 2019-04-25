@@ -64,59 +64,39 @@
 <!--中间内容-->
 <div  class="m-container m-padded-tb-big">
     <div class="ui container">
-        <form id="review-form" action="#" th:action="@{/user/user_reviews}"  method="post" class="ui form">
+        <form id="review-form" action="#" th:action="@{/user/user_reviews}" th:object="${review}" method="post" class="ui form">
             <input type="hidden" name="published">
+            <input type="hidden" name="reviewId" th:value="*{reviewId}">
             <div class="required field">
                 <div class="ui left labeled input">
                     <div class="ui selection compact teal basic dropdown label">
-                        <input type="hidden" value="原创" >
+                        <input type="hidden" value="Original" >
                         <i class="dropdown icon"></i>
                         <div class="text">Type</div>
                         <div class="menu">
-                            <div class="item" data-value="原创">Original</div>
-                            <div class="item" data-value="转载">Reproduced</div>
-                            <!--<div class="item" data-value="翻译">Eye Shadow</div>-->
+                            <div class="item" data-value="original">Original</div>
+                            <div class="item" data-value="reproduced">Reproduced</div>
                         </div>
                     </div>
-                    <input type="text" name="title" placeholder="Title">
+                    <input type="text" name="title" placeholder="Title" th:value="*{title}">
                 </div>
             </div>
 
             <div class="required field">
                 <div id="md-content" style="z-index: 1 !important;">
-                    <!--<textarea placeholder="Content" name="content" style="display:none" th:text="*{content}"></textarea>-->
                     <textarea placeholder="Content" name="content" th:text="*{content}"></textarea>
                 </div>
             </div>
 
-            <div class="two fields">
-                <div class="required field">
-                    <div class="ui left labeled action input">
-                        <label class="ui compact teal basic label">Category</label>
-                        <div class="ui fluid selection dropdown">
-                            <input type="hidden" name="type">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Category</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Foundation</div>
-                                <div class="item" data-value="2">Concealer</div>
-                                <div class="item" data-value="3">Eye Shadow</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui left labeled action input">
-                        <label class="ui compact teal basic label">Brand</label>
-                        <div class="ui fluid selection multiple search  dropdown">
-                            <input type="hidden" name="brandIds">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Brand</div>
-                            <div class="menu">
-                                <div class="item" data-value="1">Recommend</div>
-                                <div class="item" data-value="2">Skip</div>
-                                <div class="item" data-value="3">Best-ever</div>
-                            </div>
+            <div class="field">
+                <div class="ui left labeled action input">
+                    <label class="ui compact teal basic label">Related Products</label>
+                    <div class="ui fluid selection multiple search dropdown">
+                        <input type="hidden" name="productIds" th:value="*{productIds}">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Related Products</div>
+                        <div class="menu">
+                            <div th:each="product: ${products}" class="item" th:data-value="${product.productId}" th:text="${product.name}"></div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +105,7 @@
             <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">Image</label>
-                    <input type="text" name="indexPicture" placeholder="Link of image">
+                    <input type="text" name="firstPicture" th:value="*{firstPicture}" placeholder="Link of image">
                 </div>
 
             </div>
@@ -137,18 +117,6 @@
                         <label for="recommend">Recommend</label>
                     </div>
                 </div>
-                <!--<div class="field">-->
-                    <!--<div class="ui checkbox">-->
-                        <!--<input type="checkbox" id="shareInfo" name="shareInfo" class="hidden">-->
-                        <!--<label for="shareInfo">转载声明</label>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="field">-->
-                    <!--<div class="ui checkbox">-->
-                        <!--<input type="checkbox" id="appreciation" name="appreciation" class="hidden">-->
-                        <!--<label for="appreciation">赞赏</label>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="field">
                     <div class="ui checkbox">
                         <input type="checkbox" id="commentable" name="commentable" class="hidden">
@@ -176,7 +144,7 @@
 
 <script>
 
-    //初始化Markdown编辑器
+    // Initialize Markdown
     var contentEditor;
     $(function() {
         contentEditor = editormd("md-content", {
@@ -223,15 +191,8 @@
                     prompt: 'Content：How do you like this product?'
                 }]
             },
-            typeId : {
-                identifier: 'type.id',
-                rules: [{
-                    type : 'empty',
-                    prompt: 'Category：Please choose a category:)'
-                }]
-            },
             firstPicture : {
-                identifier: 'indexPicture',
+                identifier: 'firstPicture',
                 rules: [{
                     type : 'empty',
                     prompt: 'Image：Better go with a picture:)'
