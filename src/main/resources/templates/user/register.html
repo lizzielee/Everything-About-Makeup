@@ -51,76 +51,64 @@
         <div class="ui three column stackable grid login-div">
             <div class="column"></div>
             <div class="column">
-                <form id="login" class="ui fluid form segment">
+                <form id="register-form" class="ui fluid form segment" th:action="@{/user/register}" method="post"
+                      th:object="${user}">
                     <div class="field">
-                        <label class="">First name</label>
+                        <label class="">Username</label>
                         <div class="ui left icon input">
-                            <input type="text" name="userName" placeholder="">
-                            <i class="circle outline icon"></i>
-                            <!--<div class="ui corner label">
-                                <i class="icon asterisk"></i>
-                            </div>-->
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="">Last name</label>
-                        <div class="ui left icon input">
-                            <input type="text" name="userName" placeholder="">
-                            <i class="circle outline icon"></i>
-                            <!--<div class="ui corner label">
-                                <i class="icon asterisk"></i>
-                            </div>-->
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="">username </label>
-                        <div class="ui left icon input">
-                            <input type="text" name="userName" placeholder="">
+                            <input type="text" name="username" placeholder="Username">
                             <i class="user icon"></i>
-                            <!--<div class="ui corner label">
-                                <i class="icon asterisk"></i>
-                            </div>-->
-                        </div>
-                    </div>
-                    <div class="field">
-                        <label class="">Email address</label>
-                        <div class="ui left icon input">
-                            <input type="text" name="userName" placeholder="">
-                            <i class="envelope icon"></i>
-                            <!--<div class="ui corner label">
-                                <i class="icon asterisk"></i>
-                            </div>-->
                         </div>
                     </div>
                     <div class="field">
                         <label class="">Password</label>
                         <div class="ui left icon input">
-                            <input type="password" name="password" placeholder="">
+                            <input type="password" name="password" placeholder="Password">
                             <i class="lock icon"></i>
-                            <!--<div class="ui corner label">
-                                <i class="icon asterisk"></i>
-                            </div>-->
                         </div>
                     </div>
-                    <div class="field">
-                        <label class="">Gender</label>
-                        <div class="ui left icon input">
-                            <input type="text" name="userName" placeholder="">
-                            <i class="venus mars icon"></i>
-                            <!--<div class="ui corner label">
-                                <i class="icon asterisk"></i>
-                            </div>-->
-                        </div>
-                    </div>
-
 
                     <div class="inline field">
-                        <div class="ui secondary submit button">Register</div>
+                        <div id="register-btn" class="ui secondary submit button">Register</div>
                     </div>
-
+                    <div class="ui error mini message"></div>
+                    <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
                 </form>
             </div>
             <div class="column"></div>
         </div>
     </div>
 </div>
+
+<!--/*/<th:block th:replace="user/_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
+
+<script>
+    $('#register-btn').click(function () {
+        $('#register-form').submit();
+    });
+
+    $('#register-form').form({
+        field : {
+            username : {
+                identifier: 'username',
+                rules: [{
+                    type : 'empty',
+                    prompt: 'Username cannot be empty:)'
+                }]
+            },
+            password : {
+                identifier: 'password',
+                rules: [{
+                    type : 'empty',
+                    prompt: 'Password cannot be empty:)'
+                }]
+            },
+        }
+    })
+</script>
+
+</body>
+</html>

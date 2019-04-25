@@ -55,17 +55,18 @@
             </div>
 
             <!--reviews-->
-            <div class="ui comments">
-                <div class="comment" th:each="review : ${reviews}">
+            <div class="ui divided comments">
+                <h3 class="ui dividing header">Reviews</h3>
+                <div class="comment celled" th:each="review : ${reviews}">
                     <a class="avatar">
-                        <img th:src="${review.firstPicture}">
+                        <img th:src="${review.writeUser.userInfo} ? ${review.writeUser.userInfo.profilePicture}">
                     </a>
                     <div class="content">
-                        <a class="author" th:text="${review.writeUser}">Author</a>
+                        <a class="author" th:text="${review.writeUser} ? ${review.writeUser.username}">Author</a>
                         <div class="metadata">
                             <div class="date" th:text="${#dates.format(review.createTime,'yyyy-MM-dd')}"></div>
                         </div>
-                        <div class="text typo typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large" th:utext="${review.content}">
+                        <div class="text typo typo-selection js-toc-content m-padded-tb-small" th:utext="${review.content}">
                         </div>
                     </div>
                 </div>

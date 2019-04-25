@@ -11,7 +11,7 @@
 <body>
 
 <!--navigator-->
-<nav th:replace="user/_fragments :: menu(1)" class="ui inverted attached segment">
+<nav th:replace="user/_fragments :: menu(0)" class="ui inverted attached segment">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui teal header item">EVERYTHING ABOUT MAKEUP</h2>
@@ -96,7 +96,7 @@
 
                 </form>
                 <div class="ui message">
-                    New to us?   <a href="#">Sign Up</a>
+                    New to us?   <a href="#" th:href="@{/user/register}">Sign Up</a>
                 </div>
             </div>
             <div class="column"></div>

@@ -65,7 +65,7 @@
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
                                 <h3 class="ui header" th:text="${review.title}"></h3>
-                                <div class="text typo typo-selection js-toc-content" th:utext="${review.content}">
+                                <div class="text typo typo-selection js-toc-content m-padded-tb-large" th:utext="${review.content}">
                                     Part of content</div>
                                 <div class="ui grid">
                                     <div class="eleven wide column">
@@ -97,7 +97,7 @@
                             <!--Image-->
                             <div class="five wide column">
                                 <a href="#" target="_blank">
-                                    <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                                    <img th:src="${review.firstPicture}" alt="" class="ui rounded image">
                                 </a>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                             <!--Image-->
                             <div class="five wide column">
                                 <a href="#" target="_blank">
-                                    <img src="https://unsplash.it/800/450?image=1005" alt="" class="ui rounded image">
+                                    <img th:src="${review.firstPicture}" alt="" class="ui rounded image">
                                 </a>
                             </div>
                         </div>
