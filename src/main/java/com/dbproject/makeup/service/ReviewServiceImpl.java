@@ -18,6 +18,7 @@ import com.dbproject.makeup.vo.ReviewQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,8 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService{
+
+    private final int showReviewLen = 500;
 
     private final ReviewRepository reviewRepository;
     private final ProductRepository productRepository;
@@ -91,7 +94,7 @@ public class ReviewServiceImpl implements ReviewService{
                 predicates.add(cb.equal(root.<Boolean>get("recommend"),query.isRecommend()));
 
             }
-            return cb.or(predicates.toArray(new Predicate[0]));
+            return cb.and(predicates.toArray(new Predicate[0]));
         }, pageable);
     }
 
@@ -99,10 +102,7 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public Page<Review> listConvertReviewByCreateTimeDesc(Pageable pageable) {
         Page<Review> reviews = reviewRepository.findAllByOrderByCreateTimeDesc(pageable);
-        for(Review review: reviews) {
-            review.setContent(MarkdownUtils.markdownToHtmlExtensions(review.getContent()));
-        }
-        return reviews;
+        return listReviewConvert(reviews);
     }
 
     @Transactional
@@ -112,10 +112,7 @@ public class ReviewServiceImpl implements ReviewService{
             cq.orderBy(cb.desc(cb.size(root.get("likeByUserList"))));
             return cq.getRestriction();
         }, pageable);
-        for (Review review : reviews) {
-            review.setContent(MarkdownUtils.markdownToHtmlExtensions(review.getContent()));
-        }
-        return reviews;
+        return listReviewConvert(reviews);
     }
 
     @Transactional
@@ -124,12 +121,24 @@ public class ReviewServiceImpl implements ReviewService{
         Product product = productRepository.findById(productId).orElse(null);
 
         Page<Review> reviews = reviewRepository.findAllByRelatedProductListContaining(pageable, product);
-        for (Review review : reviews) {
-            review.setContent(MarkdownUtils.markdownToHtmlExtensions(review.getContent()));
-        }
-        return reviews;
+        return listReviewConvert(reviews);
     }
 
+    private Page<Review> listReviewConvert(Page<Review> reviews) {
+        // Deep clone
+        List<Review> newReviews = new ArrayList<>();
+        for(Review review: reviews) {
+            Review newReview = new Review();
+            BeanUtils.copyProperties(review, newReview);
+
+            // Get substring
+            int subLen = newReview.getContent().length() > showReviewLen? showReviewLen : newReview.getContent().length();
+            newReview.setContent(MarkdownUtils.markdownToHtmlExtensions(newReview.getContent().substring(0, subLen)));
+
+            newReviews.add(newReview);
+        }
+        return new PageImpl<>(newReviews);
+    }
 
     @Transactional
     @Override
