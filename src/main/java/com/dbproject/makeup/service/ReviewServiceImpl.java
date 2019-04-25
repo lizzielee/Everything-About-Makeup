@@ -13,6 +13,7 @@ import com.dbproject.makeup.dao.ProductRepository;
 import com.dbproject.makeup.dao.ReviewRepository;
 import com.dbproject.makeup.po.Product;
 import com.dbproject.makeup.po.Review;
+import com.dbproject.makeup.util.MarkdownUtils;
 import com.dbproject.makeup.vo.ReviewQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -40,54 +42,96 @@ public class ReviewServiceImpl implements ReviewService{
         this.productRepository = productRepository;
     }
 
+    @Transactional
     @Override
     public Review getReview(Long id) {
         return reviewRepository.findById(id).orElse(null);
     }
 
+    @Transactional
+    @Override
+    public Review getConvertReview(Long id) {
+        Review review = reviewRepository.findById(id).orElse(null);
+        if(review == null) {
+            throw new NotFoundException("Failed to find review.");
+        }
+
+        Review r = new Review();
+        BeanUtils.copyProperties(review, r);
+        String content = r.getContent();
+        r.setContent(MarkdownUtils.markdownToHtmlExtensions(content));
+        return r;
+    }
+
+    @Transactional
     @Override
     public Page<Review> listReview(Pageable pageable) {
         return reviewRepository.findAll(pageable);
     }
 
+    @Transactional
     @Override
-    public Page<Review> listReview(Pageable pageable, ReviewQuery review) {
+    public Page<Review> listReview(Pageable pageable, ReviewQuery query) {
         return reviewRepository.findAll((Specification<Review>) (root, cq, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
             // Search by title
-            if (!"".equals(review.getTitle()) && review.getTitle() != null) {
-                predicates.add(cb.like(root.get("title"), "%" + review.getTitle() + "%"));
+            if (!"".equals(query.getTitle()) && query.getTitle() != null) {
+                predicates.add(cb.like(root.get("title"), "%" + query.getTitle() + "%"));
             }
             // Search by product
-            if(review.getProductId() != null) {
+            if(query.getProductId() != null) {
                 // Get queried product
-                Product product = productRepository.findById(review.getProductId()).orElse(null);
+                Product product = productRepository.findById(query.getProductId()).orElse(null);
 
                 // Find all the reviews contain this product
                 predicates.add(cb.isMember(product, root.get("relatedProductList")));
             }
             // Search by recommend
-            if (review.isRecommend()) {
-                predicates.add(cb.equal(root.<Boolean>get("recommend"),review.isRecommend()));
+            if (query.isRecommend()) {
+                predicates.add(cb.equal(root.<Boolean>get("recommend"),query.isRecommend()));
 
             }
-            return cb.and(predicates.toArray(new Predicate[0]));
+            return cb.or(predicates.toArray(new Predicate[0]));
         }, pageable);
     }
 
+    @Transactional
     @Override
-    public Page<Review> listReviewByCreateTimeDesc(Pageable pageable) {
-        return reviewRepository.findAllByOrderByCreateTimeDesc(pageable);
+    public Page<Review> listConvertReviewByCreateTimeDesc(Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findAllByOrderByCreateTimeDesc(pageable);
+        for(Review review: reviews) {
+            review.setContent(MarkdownUtils.markdownToHtmlExtensions(review.getContent()));
+        }
+        return reviews;
     }
 
+    @Transactional
     @Override
-    public Page<Review> listReviewByLikesDesc(Pageable pageable) {
-        return reviewRepository.findAll((Specification<Review>) (root, cq, cb) -> {
+    public Page<Review> listConvertReviewByLikesDesc(Pageable pageable) {
+        Page<Review> reviews =  reviewRepository.findAll((Specification<Review>) (root, cq, cb) -> {
             cq.orderBy(cb.desc(cb.size(root.get("likeByUserList"))));
             return cq.getRestriction();
         }, pageable);
+        for (Review review : reviews) {
+            review.setContent(MarkdownUtils.markdownToHtmlExtensions(review.getContent()));
+        }
+        return reviews;
     }
 
+    @Transactional
+    @Override
+    public Page<Review> listConvertReviewUsingProduct(Pageable pageable, Long productId) {
+        Product product = productRepository.findById(productId).orElse(null);
+
+        Page<Review> reviews = reviewRepository.findAllByRelatedProductListContaining(pageable, product);
+        for (Review review : reviews) {
+            review.setContent(MarkdownUtils.markdownToHtmlExtensions(review.getContent()));
+        }
+        return reviews;
+    }
+
+
+    @Transactional
     @Override
     public Review saveReview(Review review) {
         review.setCreateTime(new Date());
@@ -97,6 +141,7 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewRepository.save(review);
     }
 
+    @Transactional
     @Override
     public Review updateReview(Long id, Review review) {
         Review r = reviewRepository.findById(id).orElse(null);
@@ -107,6 +152,7 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewRepository.save(r);
     }
 
+    @Transactional
     @Override
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);

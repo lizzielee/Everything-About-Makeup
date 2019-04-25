@@ -65,18 +65,13 @@
                         <div class="metadata">
                             <div class="date" th:text="${#dates.format(review.createTime,'yyyy-MM-dd')}"></div>
                         </div>
-                        <div class="text" th:text="${review.content}">
+                        <div class="text typo typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large" th:utext="${review.content}">
                         </div>
                     </div>
                 </div>
-                <form class="ui reply form">
-                    <div class="field">
-                        <textarea></textarea>
-                    </div>
-                    <div class="ui primary submit labeled icon button">
-                        <i class="icon edit"></i> Write Review for this Product
-                    </div>
-                </form>
+                <div class="ui primary submit labeled icon button">
+                    <i class="icon edit"></i> Write Review for this Product
+                </div>
             </div>
         </div>
     </div>

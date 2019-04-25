@@ -65,8 +65,8 @@
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
                                 <h3 class="ui header" th:text="${review.title}"></h3>
-                                <p class="m-text" th:text="${review.content}">
-                                    Part of content</p>
+                                <div class="text typo typo-selection js-toc-content" th:utext="${review.content}">
+                                    Part of content</div>
                                 <div class="ui grid">
                                     <div class="eleven wide column">
                                         <div class="ui mini horizontal link list">
@@ -122,8 +122,8 @@
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
                                 <h3 class="ui header" th:text="${review.title}"></h3>
-                                <p class="m-text" th:text="${review.content}">
-                                    Part of content</p>
+                                <div class="text typo typo-selection js-toc-content m-padded-tb-large" th:utext="${review.content}">
+                                    Part of content</div>
                                 <div class="ui grid">
                                     <div class="eleven wide column">
                                         <div class="ui mini horizontal link list">

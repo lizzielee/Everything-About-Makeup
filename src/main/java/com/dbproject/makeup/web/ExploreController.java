@@ -3,7 +3,6 @@ package com.dbproject.makeup.web;
 import com.dbproject.makeup.service.CategoryService;
 import com.dbproject.makeup.service.ProductService;
 import com.dbproject.makeup.service.ReviewService;
-import com.dbproject.makeup.vo.ReviewQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -45,9 +44,7 @@ public class ExploreController {
         model.addAttribute("product", productService.getProduct(p_id));
 
         // Product id review query
-        ReviewQuery query = new ReviewQuery();
-        query.setProductId(p_id);
-        model.addAttribute("reviews", reviewService.listReview(pageable, query));
+        model.addAttribute("reviews", reviewService.listConvertReviewUsingProduct(pageable, p_id));
         return "product";
     }
 }

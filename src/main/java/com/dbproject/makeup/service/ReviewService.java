@@ -7,13 +7,17 @@ import org.springframework.data.domain.Pageable;
 public interface ReviewService {
     Review getReview(Long id);
 
+    Review getConvertReview(Long id);
+
     Page<Review> listReview(Pageable pageable);
 
-    Page<Review> listReviewByCreateTimeDesc(Pageable pageable);
+    Page<Review> listConvertReviewByCreateTimeDesc(Pageable pageable);
 
-    Page<Review> listReviewByLikesDesc(Pageable pageable);
+    Page<Review> listConvertReviewByLikesDesc(Pageable pageable);
 
     Page<Review> listReview(Pageable pageable, ReviewQuery reviewQuery);
+
+    Page<Review> listConvertReviewUsingProduct(Pageable pageable, Long id);
 
     Review saveReview(Review review);
 

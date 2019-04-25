@@ -22,8 +22,8 @@ public class IndexController {
     public String index(@Qualifier("top") Pageable topPageable,
                         @Qualifier("new") Pageable newPageable,
                         Model model) {
-        model.addAttribute("top_reviews", reviewService.listReviewByLikesDesc(topPageable));
-        model.addAttribute("new_reviews", reviewService.listReviewByCreateTimeDesc(newPageable));
+        model.addAttribute("top_reviews", reviewService.listConvertReviewByLikesDesc(topPageable));
+        model.addAttribute("new_reviews", reviewService.listConvertReviewByCreateTimeDesc(newPageable));
         return "index";
     }
 }
