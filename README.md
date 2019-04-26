@@ -22,6 +22,7 @@ This is a website developed using **Java Spring Boot (Backend)**, **Semantic UI 
 3. Full-text Searching
 
 Visitors can search reviews by content or titles.
+![Searching page](https://github.com/lizzielee/Everything-About-Makeup/blob/master/doc/img/Searching.png?raw=true)
 
 
 
