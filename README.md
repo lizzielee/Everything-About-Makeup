@@ -19,6 +19,11 @@ This is a website developed using **Java Spring Boot (Backend)**, **Semantic UI 
   
 ![Product page](https://github.com/lizzielee/Everything-About-Makeup/blob/master/doc/img/Product.png?raw=true)
 
+3. Full-text Searching
+
+Visitors can search reviews by content or titles.
+
+
 
 ### For users who already login
 1. Login & Register
